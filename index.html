@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interview Prep — Shimsha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@500&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-base:#0d0f14;--bg-surface:#13161d;--bg-card:#181c25;--bg-elevated:#1e2330;
+  --border-subtle:#232838;--border-mid:#2d3345;--border-strong:#3a4158;
+  --text-primary:#e8e4d8;--text-secondary:#9ba3b8;--text-muted:#5c6478;--text-faint:#3a4158;
+  --teal:#3d9e82;--teal-dim:#1e4d3e;--teal-text:#6ecfb0;
+  --amber:#c4813a;--amber-dim:#3d2810;--amber-text:#e8a85e;
+  --rose:#b04a4a;--rose-dim:#3d1515;--rose-text:#e07070;
+  --violet:#6b5acd;--violet-dim:#1e1a40;--violet-text:#a090f0;
+  --slate:#4a5578;--slate-dim:#1a1f30;--slate-text:#8090b8;
+  --font-display:'Lora',Georgia,serif;--font-body:'Inter',-apple-system,sans-serif;
+  --r-sm:4px;--r-md:8px;--r-lg:12px;--r-pill:999px;--tx:180ms ease;
+}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-body);line-height:1.6;min-height:100vh}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg-base)}::-webkit-scrollbar-thumb{background:var(--border-mid);border-radius:3px}
+button{cursor:pointer;font-family:var(--font-body)}
+textarea{font-family:var(--font-body)}
+
+/* HEADER */
+.header{background:var(--bg-surface);border-bottom:1px solid var(--border-subtle);position:sticky;top:0;z-index:100}
+.header-inner{max-width:900px;margin:0 auto;padding:18px 24px 14px;display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px}
+.h-title{font-family:var(--font-display);font-size:21px;font-weight:500;color:var(--text-primary);letter-spacing:-.3px;margin-bottom:7px}
+.meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.meta-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-secondary)}
+.meta-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.nav{display:flex;gap:3px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r-lg);padding:3px;flex-shrink:0;align-self:flex-start;margin-top:2px}
+.nav-btn{background:transparent;border:none;padding:7px 16px;border-radius:var(--r-md);font-size:13px;color:var(--text-muted);transition:all var(--tx);font-weight:500}
+.nav-btn:hover{color:var(--text-secondary);background:var(--bg-elevated)}
+.nav-btn.active{background:var(--bg-elevated);color:var(--text-primary)}
+.export-btn{background:var(--teal-dim);border:1px solid var(--teal);border-radius:var(--r-md);padding:7px 14px;font-size:12px;font-weight:500;color:var(--teal-text);transition:all var(--tx);flex-shrink:0;align-self:flex-start;margin-top:2px;white-space:nowrap}
+.export-btn:hover{background:var(--teal);color:#fff}
+.prog-bar-wrap{border-top:1px solid var(--border-subtle);padding:8px 24px}
+.prog-bar-inner{max-width:900px;margin:0 auto}
+.prog-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-bottom:5px}
+.prog-track{height:3px;background:var(--border-subtle);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--violet));border-radius:2px;transition:width .5s ease}
+
+/* LAYOUT */
+.main{padding:26px 0 80px}
+.container{max-width:900px;margin:0 auto;padding:0 24px}
+
+/* FILTER BAR */
+.filter-bar{margin-bottom:18px;overflow-x:auto;scrollbar-width:none}
+.filter-bar::-webkit-scrollbar{display:none}
+.filter-scroll{display:flex;gap:5px;padding-bottom:2px}
+.filter-btn{display:flex;align-items:center;gap:5px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r-pill);padding:5px 13px;font-size:12px;color:var(--text-secondary);white-space:nowrap;transition:all var(--tx);flex-shrink:0}
+.filter-btn:hover{border-color:var(--border-mid);color:var(--text-primary)}
+.filter-btn.active{background:var(--bg-elevated);border-color:var(--border-strong);color:var(--text-primary)}
+.filter-count{background:var(--bg-elevated);border-radius:var(--r-pill);padding:1px 6px;font-size:10px;color:var(--text-muted)}
+.hint{font-size:12px;color:var(--text-muted);margin-bottom:14px;line-height:1.5}
+
+/* QUESTION CARD */
+.q-card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r-lg);margin-bottom:7px;overflow:hidden;transition:border-color var(--tx)}
+.q-card.open{border-color:var(--border-mid)}
+.q-trigger{width:100%;background:none;border:none;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;text-align:left;color:var(--text-primary);transition:background var(--tx)}
+.q-trigger:hover{background:var(--bg-elevated)}
+.q-left{display:flex;align-items:flex-start;gap:12px;flex:1;min-width:0}
+.q-index{width:27px;height:27px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border-mid);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;color:var(--text-muted);transition:all var(--tx)}
+.q-index.done{background:var(--teal-dim);border-color:var(--teal);color:var(--teal-text)}
+.q-text-wrap{flex:1;min-width:0}
+.q-text{font-size:14px;font-weight:500;color:var(--text-primary);line-height:1.45}
+.q-mini-prog{display:flex;align-items:center;gap:7px;margin-top:5px}
+.q-mini-track{width:55px;height:3px;background:var(--border-subtle);border-radius:2px;overflow:hidden;flex-shrink:0}
+.q-mini-fill{height:100%;border-radius:2px;transition:width .3s ease}
+.q-mini-label{font-size:11px;color:var(--text-muted)}
+.q-done-label{font-size:11px;color:var(--teal-text);margin-top:4px}
+.q-right{display:flex;align-items:center;gap:9px;flex-shrink:0;color:var(--text-muted)}
+.pill{font-size:10px;font-weight:500;letter-spacing:.04em;padding:3px 9px;border-radius:var(--r-pill);white-space:nowrap}
+.pill-teal{background:var(--teal-dim);color:var(--teal-text)}
+.pill-violet{background:var(--violet-dim);color:var(--violet-text)}
+.pill-amber{background:var(--amber-dim);color:var(--amber-text)}
+.pill-rose{background:var(--rose-dim);color:var(--rose-text)}
+.pill-slate{background:var(--slate-dim);color:var(--slate-text)}
+.chevron{transition:transform 200ms ease;flex-shrink:0}
+.chevron.open{transform:rotate(180deg)}
+
+/* CARD BODY */
+.q-body{border-top:1px solid var(--border-subtle);padding:18px 18px 22px}
+.trap-box{background:var(--rose-dim);border:1px solid var(--rose);border-radius:var(--r-md);padding:11px 14px;display:flex;gap:9px;align-items:flex-start;margin-bottom:18px}
+.trap-icon{color:var(--rose-text);font-size:13px;flex-shrink:0;margin-top:1px}
+.trap-box p{font-size:13px;color:var(--rose-text);line-height:1.6}
+.steps{display:flex;flex-direction:column}
+.step{padding:13px 0;border-bottom:1px solid var(--border-subtle)}
+.step:last-child{border-bottom:none;padding-bottom:0}
+.step-header{display:flex;align-items:flex-start;gap:9px;margin-bottom:7px}
+.checkbox{width:17px;height:17px;border-radius:var(--r-sm);border:1px solid var(--border-mid);background:transparent;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all var(--tx);color:transparent}
+.checkbox.teal:hover{border-color:var(--teal)}.checkbox.teal.checked{background:var(--teal);border-color:var(--teal);color:#fff}
+.checkbox.violet:hover{border-color:var(--violet)}.checkbox.violet.checked{background:var(--violet);border-color:var(--violet);color:#fff}
+.checkbox.amber:hover{border-color:var(--amber)}.checkbox.amber.checked{background:var(--amber);border-color:var(--amber);color:#fff}
+.checkbox.rose:hover{border-color:var(--rose)}.checkbox.rose.checked{background:var(--rose);border-color:var(--rose);color:#fff}
+.checkbox.slate:hover{border-color:var(--slate)}.checkbox.slate.checked{background:var(--slate);border-color:var(--slate);color:#fff}
+.step-dot{width:5px;height:5px;border-radius:50%;background:var(--border-mid);flex-shrink:0;margin-top:8px;margin-left:6px}
+.step-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;flex:1}
+.step-label{font-size:13px;font-weight:500;color:var(--text-primary);line-height:1.4}
+.exp-badge{font-size:10px;font-weight:500;padding:2px 7px;border-radius:var(--r-pill);letter-spacing:.03em;white-space:nowrap}
+.exp-teal{background:var(--teal-dim);color:var(--teal-text)}
+.exp-violet{background:var(--violet-dim);color:var(--violet-text)}
+.exp-amber{background:var(--amber-dim);color:var(--amber-text)}
+.exp-rose{background:var(--rose-dim);color:var(--rose-text)}
+.exp-slate{background:var(--slate-dim);color:var(--slate-text)}
+.step-guidance{font-size:13px;color:var(--text-secondary);line-height:1.65;padding-left:26px;margin-bottom:9px}
+.step-textarea{background:var(--bg-elevated);border:1px solid var(--border-mid);border-radius:var(--r-md);padding:9px 11px;font-size:13px;color:var(--text-primary);line-height:1.6;resize:vertical;min-height:70px;outline:none;transition:border-color var(--tx);margin-left:26px;width:calc(100% - 26px)}
+.step-textarea::placeholder{color:var(--text-faint)}
+.step-textarea:focus{border-color:var(--border-strong)}
+
+/* FILL COLORS */
+
+.model-toggle{width:100%;background:none;border:none;border-top:1px solid var(--border-subtle);padding:10px 18px;display:flex;align-items:center;gap:8px;color:var(--violet-text);font-size:12px;font-weight:500;transition:background var(--tx);text-align:left;}
+.model-toggle:hover{background:var(--violet-dim);}
+.model-toggle svg{flex-shrink:0;transition:transform 200ms ease;}
+.model-toggle.open svg{transform:rotate(180deg);}
+.model-body{border-top:1px solid var(--border-subtle);background:var(--violet-dim);padding:18px 20px;}
+.model-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--violet-text);margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.model-label::after{content:'';flex:1;height:1px;background:var(--violet-dim);filter:brightness(1.5);}
+.model-text{font-size:13px;color:#c0bcd0;line-height:1.8;white-space:pre-wrap;}
+.model-text [INSERT]{color:var(--amber-text);font-style:italic;}
+.model-note{font-size:11px;color:var(--violet-text);margin-top:12px;padding-top:10px;border-top:1px solid rgba(107,90,205,.2);line-height:1.5;}
+.fill-teal{background:var(--teal)}
+.fill-violet{background:var(--violet)}
+.fill-amber{background:var(--amber)}
+.fill-rose{background:var(--rose)}
+.fill-slate{background:var(--slate)}
+
+/* TIMETABLE */
+.interview-banner{display:flex;align-items:center;gap:18px;background:var(--bg-card);border:1px solid var(--border-mid);border-left:3px solid var(--teal);border-radius:var(--r-lg);padding:18px 22px;margin-bottom:18px}
+.banner-date{text-align:center;flex-shrink:0;padding-right:18px;border-right:1px solid var(--border-subtle)}
+.banner-day{font-family:var(--font-display);font-size:38px;font-weight:500;color:var(--teal-text);line-height:1}
+.banner-month{font-size:11px;color:var(--text-muted);margin-top:2px;text-transform:uppercase;letter-spacing:.06em}
+.banner-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-text);margin-bottom:3px}
+.banner-title{font-size:15px;font-weight:500;color:var(--text-primary)}
+.banner-sub{font-size:13px;color:var(--text-secondary);margin-top:2px}
+.non-neg{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r-lg);padding:15px 18px;margin-bottom:22px}
+.non-neg-title{font-size:12px;font-weight:500;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:11px}
+.non-neg-row{display:flex;gap:9px;font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:7px}
+.non-neg-row:last-child{margin-bottom:0}
+.non-neg-bullet{color:var(--text-muted);flex-shrink:0}
+.phases{display:flex;flex-direction:column;gap:7px;margin-bottom:26px}
+.phase-block{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r-lg);overflow:hidden;transition:border-color var(--tx)}
+.phase-block.open{border-color:var(--border-mid)}
+.phase-header{width:100%;background:none;border:none;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;text-align:left;color:var(--text-primary);transition:background var(--tx)}
+.phase-header:hover{background:var(--bg-elevated)}
+.phase-left{display:flex;align-items:center;gap:12px}
+.phase-title{font-size:14px;font-weight:500;color:var(--text-primary)}
+.phase-sub{font-size:12px;color:var(--text-muted);margin-top:2px}
+.phase-right{display:flex;align-items:center;gap:9px;color:var(--text-muted)}
+.phase-count{font-size:12px;color:var(--text-muted)}
+.phase-body{border-top:1px solid var(--border-subtle);padding:15px 18px 18px}
+.day-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:9px}
+.day-card{background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--r-md);padding:13px}
+.day-card.interview{border-color:var(--teal);background:var(--teal-dim)}
+.day-card.highlight{border-color:var(--border-mid)}
+.day-label{font-size:10px;letter-spacing:.06em;color:var(--text-muted);margin-bottom:2px}
+.day-date{font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:9px}
+.task-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.task-item{display:flex;gap:7px;font-size:12px;color:var(--text-secondary);line-height:1.5;cursor:pointer;transition:color var(--tx);user-select:none}
+.task-item:hover{color:var(--text-primary)}
+.task-item.done{color:var(--text-muted);text-decoration:line-through;text-decoration-color:var(--text-faint)}
+.task-check{flex-shrink:0;color:var(--text-muted);font-size:11px;margin-top:1px}
+.task-item.done .task-check{color:var(--teal-text)}
+.daily-section{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r-lg);padding:18px}
+.daily-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:14px}
+.daily-row{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid var(--border-subtle)}
+.daily-row:last-child{border-bottom:none;padding-bottom:0}
+.daily-time{font-size:11px;color:var(--text-muted);min-width:62px;padding-top:2px;flex-shrink:0}
+.daily-block-title{font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:2px}
+.daily-desc{font-size:12px;color:var(--text-secondary);line-height:1.6}
+
+@media(max-width:600px){.container{padding:0 14px}.header-inner{padding:14px 14px 12px}.prog-bar-wrap{padding:7px 14px}.h-title{font-size:18px}.day-grid{grid-template-columns:1fr 1fr}}
+
+/* MARKING MATRIX */
+.matrix-toggle{width:100%;background:var(--slate-dim);border:none;border-top:1px solid var(--border-subtle);padding:12px 18px;display:flex;align-items:center;gap:9px;font-size:13px;font-weight:500;color:var(--slate-text);transition:background var(--tx)}
+.matrix-toggle:hover{background:var(--bg-elevated)}
+.matrix-toggle .chev{transition:transform var(--tx)}
+.matrix-toggle.open .chev{transform:rotate(180deg)}
+.matrix-body{background:var(--bg-surface);border-top:1px solid var(--border-subtle);padding:16px 18px 18px}
+.mx-tests{font-size:12px;color:var(--text-secondary);margin-bottom:16px;line-height:1.55}
+.mx-crit{margin-bottom:15px}
+.mx-crit-name{font-size:12.5px;font-weight:600;color:var(--text-primary);margin-bottom:7px}
+.mx-chips{display:flex;gap:6px;margin-bottom:6px}
+.mx-chip{width:32px;height:32px;border-radius:var(--r-md);border:1px solid var(--border-mid);background:var(--bg-card);color:var(--text-muted);font-size:13px;font-weight:600;transition:all var(--tx)}
+.mx-chip:hover{border-color:var(--border-strong);color:var(--text-secondary)}
+.mx-chip.sel{color:#fff}
+.mx-chip.sel.s0{background:var(--text-faint);border-color:var(--text-muted);color:var(--text-primary)}
+.mx-chip.sel.s1{background:var(--rose);border-color:var(--rose)}
+.mx-chip.sel.s2{background:var(--amber);border-color:var(--amber)}
+.mx-chip.sel.s3{background:var(--teal);border-color:var(--teal)}
+.mx-legend{font-size:11px;color:var(--text-muted);line-height:1.5}
+.mx-legend b{color:var(--text-secondary);font-weight:600;margin-right:2px}
+.mx-red{display:flex;align-items:flex-start;gap:10px;background:var(--rose-dim);border:1px solid var(--rose);border-radius:var(--r-md);padding:10px 12px;margin:8px 0 14px;font-size:11.5px;color:var(--rose-text);line-height:1.55}
+.mx-red>div{flex:1}
+.mx-redflag-btn{flex-shrink:0;background:transparent;border:1px solid var(--rose);border-radius:var(--r-pill);padding:4px 11px;font-size:11px;color:var(--rose-text);white-space:nowrap;transition:all var(--tx)}
+.mx-redflag-btn.on{background:var(--rose);color:#fff}
+.mx-dist{font-size:11.5px;color:var(--teal-text);background:var(--teal-dim);border-radius:var(--r-md);padding:9px 12px;margin-bottom:6px;line-height:1.55}
+.mx-dist b{font-weight:600}
+.mx-total{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0 8px;border-top:1px solid var(--border-subtle);margin-top:10px}
+.mx-total-num{font-family:var(--font-display);font-size:22px;color:var(--text-primary)}
+.mx-total-num span{font-size:13px;color:var(--text-muted)}
+.mx-band{font-size:11px;padding:4px 11px;border-radius:var(--r-pill);font-weight:600}
+.mx-note{width:100%;background:var(--bg-card);border:1px solid var(--border-mid);border-radius:var(--r-md);padding:9px 11px;color:var(--text-primary);font-size:12px;resize:vertical;margin:6px 0 10px;line-height:1.5;font-family:var(--font-body)}
+.mx-note:focus{outline:none;border-color:var(--border-strong)}
+.mx-save{background:var(--teal-dim);border:1px solid var(--teal);border-radius:var(--r-md);padding:8px 16px;font-size:12px;font-weight:500;color:var(--teal-text);transition:all var(--tx)}
+.mx-save:hover{background:var(--teal);color:#fff}
+.mx-runs{margin-top:18px;border-top:1px solid var(--border-subtle);padding-top:13px}
+.mx-runs-title{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:9px}
+.mx-run{display:flex;align-items:center;gap:11px;padding:7px 0;border-bottom:1px solid var(--border-subtle);font-size:12px}
+.mx-run:last-child{border-bottom:none}
+.mx-run-date{color:var(--text-secondary);min-width:50px}
+.mx-run-score{font-weight:600;color:var(--text-primary);min-width:42px}
+.mx-run-redflag{color:var(--rose-text);font-size:11px}
+.mx-run-note{color:var(--text-muted);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mx-run-del{background:none;border:none;color:var(--text-faint);font-size:14px;padding:2px 6px;flex-shrink:0}
+.mx-run-del:hover{color:var(--rose-text)}
+.mx-empty{font-size:11.5px;color:var(--text-muted);font-style:italic;line-height:1.5}
+/* SCORING VIEW */
+.score-summary{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.ss-item{flex:1;min-width:96px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r-lg);padding:12px 14px}
+.ss-num{font-family:var(--font-display);font-size:22px;color:var(--text-primary);line-height:1.2}
+.ss-num span{font-size:12px;color:var(--text-muted)}
+.ss-lbl{font-size:11px;color:var(--text-muted);margin-top:3px}
+.score-badge{font-size:11px;padding:3px 9px;border-radius:var(--r-pill);font-weight:600;white-space:nowrap}
+
+.origin-badge{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;padding:2px 7px;border-radius:var(--r-pill);white-space:nowrap}
+.origin-original{background:transparent;color:var(--text-faint);border:1px solid var(--border-subtle)}
+.origin-added{background:var(--bg-elevated);color:var(--text-secondary);border:1px solid var(--border-mid)}
+
+.origin-toggle{display:inline-flex;gap:4px;background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--r-md);padding:4px;margin-bottom:14px}
+.origin-tog-btn{font-size:12px;font-weight:500;color:var(--text-muted);padding:6px 12px;border:none;background:transparent;border-radius:var(--r-md);transition:all var(--tx);white-space:nowrap}
+.origin-tog-btn:hover{color:var(--text-secondary)}
+.origin-tog-btn.active{background:var(--bg-elevated);color:var(--text-primary);box-shadow:inset 0 0 0 1px var(--border-mid)}
+.otog-count{font-size:10px;opacity:.65;margin-left:3px}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────────────────
+
+const CATEGORIES = {
+  GOVERNANCE:    { label: 'Governance & Quality',      color: 'rose'   },
+  EVIDENCE:      { label: 'Evidence-Based Practice',   color: 'amber'  },
+  CLINICAL:      { label: 'Clinical Practice',         color: 'violet' },
+  EXPERIENCE:    { label: 'Experience & Suitability',  color: 'teal'   },
+  CPD:           { label: 'Professional Development',  color: 'amber'  },
+  PROFESSIONALISM:{ label: 'Professionalism',          color: 'rose'   },
+  FUTURE:        { label: 'Future Challenges',         color: 'slate'  },
+  MOTIVATION:    { label: 'Motivation',                color: 'teal'   },
+  SELF:          { label: 'Self-Awareness',            color: 'slate'  },
+  RESEARCH:      { label: 'Research',                  color: 'amber'  },
+  PUBHEALTH:     { label: 'Public Health',             color: 'amber'  },
+  COMPLICATIONS: { label: 'Clinical Complications',    color: 'violet' },
+  TEACHING:      { label: 'Teaching & Leadership',     color: 'slate'  },
+  CLOSING:       { label: 'Closing',                   color: 'slate'  },
+};
+
+const QUESTIONS = [
+  {id:'q09',model:`The moment I knew was a specific case — [INSERT THE CASE: what was it, what happened, what did you do, what did the patient experience]. That case did something that most of dentistry doesn't: it required me to hold the complexity of anatomy, medical risk, patient fear, and technical execution simultaneously under real pressure, and when it resolved well, that resolution was immediate and unambiguous. That combination — the intellectual and the technical demand, with a clear outcome — is what drew me toward surgery.
+
+What keeps me interested is the anatomy. Oral surgery sits at the intersection of structures — the inferior alveolar nerve, the maxillary sinus, the fascial spaces, the airway — in a way that requires continuous three-dimensional spatial reasoning. I find that intellectually demanding in a way that motivates rather than exhausts me.
+
+The breadth of the specialty is also genuinely compelling. Oral surgery touches oncology, trauma, implantology, pathology, and increasingly the medical interface around bisphosphonate-related osteonecrosis and medication-related conditions. That scope means the clinical questions don't plateau — there's always something more complex ahead.
+
+My long-term intention is to progress from this GradDip to the Doctor of Clinical Dentistry in Oral Surgery, and ultimately to specialist registration. I'm clear that this program is Step 1, not the destination. [ADD: where you see yourself in 10 years — public hospital, private specialist practice, academic component, sub-specialisation interest if any].`,category:'MOTIVATION',question:'Why do you enjoy oral surgery?',trap:'SOFT TRAP: This feels easy but candidates give answers indistinguishable from each other — "I like working with my hands", "I love seeing immediate results." Make this specific to you.',steps:[
+    {label:'A specific moment that crystallised it',guidance:'Not "I\'ve always been interested." Name a case, a procedure, a patient outcome that made you certain this was the direction.',prompt:'What was the case or moment? What did you feel? Why did it matter?',isExp:true},
+    {label:'The intellectual pull',guidance:'What aspect of oral surgery thinking appeals — anatomy, decision-making under uncertainty, reconstructive planning, interface with medicine? Be specific.',prompt:'What do you find yourself reading about, thinking about, wanting to learn more of?',isExp:true},
+    {label:'The scope of the specialty',guidance:'Oral surgery sits at the intersection of dentistry and medicine — oncology, trauma, implants, pathology. If that breadth appeals, say so with specific examples.',prompt:'',isExp:false},
+    {label:'Long-term vision — GradDip as deliberate step',guidance:'This program is Step 1 toward the DClinDent (Oral Surgery). Show the panel you understand the pathway and have a direction beyond just the diploma year.',prompt:'What kind of practice do you actually want in 10 years? Sub-specialisation? Public or private? Academic component?',isExp:true},
+  ]},
+  {
+    id:"q19",
+    category:"MOTIVATION",
+    question:"Why surgical dentistry rather than the OMFS / medical-surgical pathway?",
+    trap:"SOFT TRAP: Don't disparage OMFS or imply surgical dentistry is \"OMFS-lite.\" Frame it as a positive, deliberate choice about scope and the pathway that fits you.",
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nMake it a positive choice, not a fallback. You want a dentally-grounded surgical scope that builds directly on your existing extraction and dentoalveolar foundation, with a pathway you can commit to fully. Respect OMFS as a distinct route \u2014 you're choosing the one that fits your training and goals, not avoiding the other.",
+    steps:[
+      {label:"Frame it as a positive, deliberate choice",guidance:"Not \"I couldn't do medicine\" \u2014 \"this scope and pathway is the one I want.\"",prompt:"",isExp:false},
+      {label:"Build on your dentoalveolar foundation",guidance:"Your surgical-extraction and impacted-third-molar base is the natural platform for surgical dentistry.",prompt:"How does your current operative work make this the logical next step?",isExp:true},
+      {label:"Respect the other pathway",guidance:"Acknowledge OMFS is a valid, different route \u2014 shows maturity, not rivalry.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q18",
+    category:"MOTIVATION",
+    question:"Why this program, and why Sydney specifically?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nAnchor to THIS program, not GradDips in general: the structured operative progression, the research project each semester, and the explicit Step-1 pathway toward the DClinDent in Oral Surgery. Then make Sydney concrete \u2014 the Westmead affiliation you already work within, the faculty, and the public referral case mix you see every week. Avoid \u201cstrong reputation\u201d / \u201cworld-class\u201d \u2014 every candidate says it.",
+    steps:[
+      {label:"Why this program (not just any GradDip)",guidance:"Structured operative progression, the research component, and the deliberate pathway to the DClinDent. Show you understand the structure.",prompt:"",isExp:false},
+      {label:"Why Sydney specifically",guidance:"Westmead affiliation you already work within, the faculty, the disease burden and referral complexity you already see.",prompt:"",isExp:false},
+      {label:"Your personal connection",guidance:"What about your current Westmead / Kings role makes this the natural next step?",prompt:"In one or two sentences, why is this the right program for you right now?",isExp:true},
+    ]},
+  {
+    id:"q36",
+    category:"MOTIVATION",
+    question:"Why the Graduate Diploma rather than going straight for the doctorate?",
+    trap:"TRAP: Never frame this as a fallback or a fix for an application mix-up, and never volunteer the application error. The honest, strong line is forward-looking \u2014 the GradDip is the deliberate right entry point.",
+    model:"For me the Graduate Diploma is the right entry point, not a lesser one. I've built a genuine operative foundation \u2014 surgical extractions, supervised impacted third molars, on-call trauma and haemorrhage \u2014 but I'm clear-eyed that the step from that to independent, specialist-level surgery is a real one, and I'd rather build it properly than rush it. The Diploma gives me a structured year of graded surgical exposure, teaching, and research before I take on the doctorate, and I think arriving at the DClinDent already grounded in that foundation makes me a stronger trainee, not a slower one. So I see this as a deliberate first step toward the doctorate and specialist registration \u2014 the sequence I'd choose even if both doors were open.",
+    steps:[
+      {label:"Frame the GradDip as the right entry point",guidance:"Forward-looking and confident. Not a fallback, not damage control.",prompt:"",isExp:false},
+      {label:"Acknowledge the real step ahead",guidance:"The move from her current foundation to independent specialist surgery is genuine \u2014 owning that shows judgment, not weakness.",prompt:"",isExp:false},
+      {label:"What the Diploma year gives her",guidance:"Graded operative exposure, teaching, research \u2014 the foundation before the doctorate.",prompt:"",isExp:false},
+      {label:"Explicit pathway commitment",guidance:"Deliberate first step toward the DClinDent and specialist registration.",prompt:"Confirm: does she actually intend to progress to the DClinDent? The answer depends on it.",isExp:true},
+    ]},
+  {
+    id:"q37",
+    category:"MOTIVATION",
+    question:"You initially applied for the DClinDent \u2014 what happened?",
+    trap:"TRAP: The literal truth ('I applied to the wrong program') reads as carelessness, which is disqualifying for a surgical role. Do not sound flustered, and never volunteer this unprompted.",
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nOne clean, calm sentence \u2014 no apology, no backstory about the mix-up. Reframe the clarification as good judgment about her own readiness, e.g.: 'I clarified with the faculty that the Graduate Diploma was the right entry point for me \u2014 and I'm glad I did; it's the foundation I want before the doctorate.' Then pivot straight back to why the GradDip suits her stage. Only address this if directly asked.",
+    steps:[
+      {label:"One clean, calm sentence",guidance:"No apology, no rambling, no admin detail.",prompt:"",isExp:false},
+      {label:"Reframe as readiness judgment",guidance:"The clarification shows self-awareness about her stage, not carelessness.",prompt:"",isExp:false},
+      {label:"Pivot forward immediately",guidance:"Return to why the GradDip is the right step for her.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q20",
+    category:"MOTIVATION",
+    question:"What will you do if you're not offered a place this round?",
+    trap:"TRAP: \"I'd be devastated / I have no plan B\" signals fragility. \"I don't really mind\" signals low commitment. Show resilience AND genuine commitment.",
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nShow commitment without desperation. You'd seek feedback, target the specific gap (research output, particular operative exposure, a course), keep building surgical experience on call and in the extraction clinic, and reapply. The tone is resilient and determined, not crushed and not indifferent.",
+    steps:[
+      {label:"Resilient, not desperate",guidance:"Composed determination is what the panel is testing for.",prompt:"",isExp:false},
+      {label:"A concrete plan to strengthen the application",guidance:"Name the gap you'd target and how.",prompt:"Which gap would you work on \u2014 research, case numbers, a specific course?",isExp:true},
+      {label:"Reaffirm the commitment to the pathway",guidance:"Make clear this is the direction regardless of the outcome this round.",prompt:"",isExp:false},
+    ]},
+  {id:'q05',model:`I work across two settings, and that dual exposure is the most honest answer to this question.
+
+At Westmead Centre for Oral Health, which is a major public hospital referral centre, I see a case mix that most general dental graduates don't encounter. Medically complex patients — ASA III and above, patients on anticoagulation, patients with a history of bisphosphonate use, immunocompromised patients — are routine rather than exceptional. [INSERT APPROXIMATE CASE NUMBERS: extractions per week/month, proportion surgical vs simple, third molar cases]. The multidisciplinary environment means I'm regularly communicating with medical teams, anaesthetists, and specialists in a way that pure private practice doesn't require.
+
+At Kings Family Dental Centre, I have independent clinical decision-making. Every treatment plan, every consent conversation, every post-operative complication is mine to manage without a registrar above me. That independence builds a different kind of judgment — knowing when you're at the edge of what's appropriate for your setting, and what to do about it.
+
+The layer underneath both of those is my BDS training at Mysore and then the ADC pathway. I trained in an environment with a different disease burden — advanced pathology, patients presenting late, resource constraints that forced clinical decision-making without ideal investigations. Many Australian-trained graduates have technically excellent training but narrower case exposure in terms of pathology severity. [INSERT SPECIFIC CASE TYPE OR CONDITION FROM MYSORE THAT ILLUSTRATES THIS]. That background is not a gap in my training — it's a specific form of experience that I've built on.`,category:'EXPERIENCE',question:'What experience do you have that you can bring to this course?',trap:null,steps:[
+    {label:'Volume and breadth — use numbers',guidance:'Numbers matter. How many extractions? Simple vs surgical? Impacted third molars? Estimate conservatively and state it.',prompt:'Approximate case numbers at Westmead and Kings Family. Types of procedures performed.',isExp:true},
+    {label:'Westmead as a public hospital asset',guidance:'Westmead is a major referral centre. The complexity — medically compromised patients, complex surgical cases, multidisciplinary environment — is a genuine differentiator. Name it explicitly.',prompt:'What is the most complex or unusual case mix you\'ve encountered at Westmead?',isExp:true},
+    {label:'Private practice contrast',guidance:'Kings Family Dental gives you independent decision-making, patient continuity, and business-of-care experience. Both settings are relevant.',prompt:'What have you managed independently in private that you wouldn\'t in a public setting?',isExp:true},
+    {label:'BDS Mysore + ADC as an asset, not a footnote',guidance:'Different disease burden, patient demographics, resource-limited problem-solving. Many Australian-trained graduates haven\'t seen the pathology volume you have. Own this.',prompt:'Cases or conditions from your Indian training that give you perspective Australian graduates may lack.',isExp:true},
+  ]},
+  {
+    id:"q38",
+    category:"EXPERIENCE",
+    question:"How does your overseas training compare with Australian-trained graduates?",
+    trap:"SOFT TRAP: Don't be apologetic about overseas training, and don't disparage Australian training to elevate her own. Frame it as a complementary asset plus active bridging.",
+    model:"I'd frame my overseas training as a specific asset rather than something to apologise for. My BDS at Mysore and the ADC pathway gave me exposure to a disease burden many Australian-trained graduates simply haven't seen \u2014 advanced pathology, patients presenting late, oral cancers tied to community risk factors, and the resource constraints that force sound clinical decisions without every investigation on hand. That builds judgment and resilience. The ADC process itself made me rigorous about meeting Australian standards explicitly, rather than absorbing them by osmosis. Where the systems differ \u2014 protocols, materials, referral pathways \u2014 I've actively bridged that through my work at Westmead and my CPD. So the honest answer is that my background isn't a gap to be managed; it's a different and complementary set of experiences I've built onto an Australian foundation.",
+    steps:[
+      {label:"Asset, not apology",guidance:"Lead by owning the overseas training as a distinct strength.",prompt:"",isExp:false},
+      {label:"Specific pathology exposure",guidance:"Advanced disease, late presentations, oral cancer, resource-limited decision-making.",prompt:"A specific case/condition from Mysore that Australian graduates may rarely see?",isExp:true},
+      {label:"ADC rigour",guidance:"The pathway made meeting Australian standards explicit and deliberate.",prompt:"",isExp:false},
+      {label:"Active bridging",guidance:"How she's closed system differences via Westmead and CPD.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q39",
+    category:"EXPERIENCE",
+    question:"What are the limits of your current independent scope?",
+    trap:"TRAP: Over-claiming here is how strong candidates get caught. The honest, specific answer is the strong one.",
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nName the real ceiling honestly and specifically \u2014 e.g. complex impactions she's done supervised but not solo, cases she would refer. Frame honesty about scope as a surgical skill (links to the 'beyond your scope' question). Close forward: this is precisely what the training is for.",
+    steps:[
+      {label:"Name the real ceiling",guidance:"Specific procedures/cases beyond her current independent level.",prompt:"Where does her solo capability actually end right now?",isExp:true},
+      {label:"Scope-awareness as a skill",guidance:"Knowing the limit is judgment, not deficiency.",prompt:"",isExp:false},
+      {label:"Forward framing",guidance:"This is what the GradDip year is designed to extend.",prompt:"",isExp:false},
+    ]},
+  {id:'q04',model:`Peri-operative care is the full continuum of patient management around a surgical procedure — it doesn't begin when I pick up the forceps and end when the patient leaves the chair. It begins at the first consultation and ends when I'm satisfied the patient has healed without complication.
+
+Pre-operatively, my assessment is structured: medical history with formal ASA classification and risk stratification, medication review with specific attention to anticoagulants, antiplatelets, bisphosphonates, and immunosuppressants, relevant investigations — OPG routinely, CBCT where anatomical complexity warrants it, bloods if the medical history demands it. Informed consent is a process, not a signature — I discuss risks, alternatives, and realistic expectations at the consultation, not five minutes before I start. And I make an explicit anaesthetic decision: can this be safely done under LA, does this patient need sedation, or does this need to go to GA — and at Westmead I triage the GA referrals accordingly. [ADD SPECIFIC EXAMPLE OF A COMPLEX PRE-OP ASSESSMENT].
+
+Intra-operatively, I'm monitoring the patient continuously — not just the technical steps. Communication with the nurse or assistant is part of the procedure. And when something unexpected happens — a root fractures, access is worse than the radiograph suggested — I have a decision framework for managing that in real time rather than escalating to anxiety. [ADD SPECIFIC INTRA-OP ADAPTATION EXAMPLE].
+
+Post-operatively, I'm not satisfied with handing a printed sheet. I give verbal and written instructions, I ensure the patient or carer can repeat back the key warning signs — bleeding that doesn't settle, fever, worsening pain after 48 hours — and I have a system for follow-up. At Westmead, complex surgical cases are reviewed at a set interval. If a patient doesn't attend follow-up, that's flagged. The loop needs to close.`,category:'CLINICAL',question:'What does peri-operative care mean to you and how do you assess it?',trap:null,steps:[
+    {label:'Define the three phases clearly',guidance:'Peri-operative = pre-operative + intra-operative + post-operative. Each phase has distinct goals — don\'t collapse them.',prompt:'',isExp:false},
+    {label:'Pre-operative assessment structure',guidance:'(1) Medical history — ASA classification, risk stratification. (2) Medications — anticoagulants, bisphosphonates, immunosuppression. (3) Investigations — OPG, CBCT, bloods if relevant. (4) Informed consent. (5) Anaesthetic consideration — LA, sedation, or GA referral.',prompt:'What does your current pre-op assessment look like? How do you triage GA referrals at Westmead?',isExp:true},
+    {label:'Intra-operative',guidance:'Monitoring, team communication, recognising and managing complications in real time.',prompt:'Example of adapting your approach mid-procedure?',isExp:true},
+    {label:'Post-operative systems',guidance:'Instructions, pain management, wound review, complication recognition and escalation pathway. Mention follow-up systems — not just handing a printed sheet.',prompt:'How do you currently manage post-op follow-up at Westmead?',isExp:true},
+  ]},
+  {
+    id:"q21",
+    category:"CLINICAL",
+    question:"Walk us through your management of an impacted third molar \u2014 assessment to follow-up.",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nStructured and confident: assessment (history, exam, OPG \u00b1 CBCT, signs of IAN proximity, Winter and Pell-Gregory classification), consent on the specific risks, technique (flap design, bone removal, sectioning, delivery, debridement, closure), then post-op instructions, complication recognition, and follow-up. Tie it to your supervised MOS experience with Dr Gaikaiwari and be honest about the level you've operated at.",
+    steps:[
+      {label:"Assessment & imaging",guidance:"OPG; IAN-proximity signs (darkening of the root, interruption/diversion of the canal); CBCT when indicated; Pell-Gregory and Winter classification.",prompt:"",isExp:false},
+      {label:"Consent on procedure-specific risks",guidance:"IAN/lingual nerve paraesthesia, dry socket, infection, jaw fracture, retained root.",prompt:"",isExp:false},
+      {label:"Technique, in sequence",guidance:"Flap design, bone removal, sectioning, delivery, socket debridement, closure.",prompt:"",isExp:false},
+      {label:"Your supervised operative level",guidance:"Be honest and specific about what you took vs. what Dr Gaikaiwari took.",prompt:"What level of impaction have you operated on, and what did your supervisor handle?",isExp:true},
+    ]},
+  {
+    id:"q25",
+    category:"CLINICAL",
+    question:"How do you approach the medically compromised patient \u2014 anticoagulants, antiresorptives, diabetes?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nSystematic, evidence-based, and collaborative. Anticoagulants: don't reflexively stop them \u2014 current evidence favours continuing with local haemostatic measures for most simple extractions; check INR for warfarin. Antiresorptives: MRONJ risk assessment (drug, route, duration, comorbidities) \u2014 draw on your post-extraction MRONJ screening. Diabetes: glycaemic control, infection and healing risk. Liaise with the treating physician where needed.",
+    steps:[
+      {label:"Anticoagulants / antiplatelets",guidance:"Current evidence favours continuing with local measures for most simple extractions; check INR for warfarin; weigh thrombotic vs. bleeding risk.",prompt:"",isExp:false},
+      {label:"MRONJ / antiresorptives",guidance:"Drug, route, duration, cumulative dose, comorbidities \u2014 and the patient/prescriber conversation.",prompt:"Walk through how you currently screen for MRONJ risk before an extraction.",isExp:true},
+      {label:"Diabetes, healing & physician liaison",guidance:"Glycaemic control, infection/healing risk, and when you involve the treating doctor.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q23",
+    category:"CLINICAL",
+    question:"How do you assess and consent a patient for surgical risk?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nConsent is a process, not a signature collected five minutes before you start. Cover the material, procedure-specific risks, the alternatives (including no treatment), and check genuine understanding with teach-back. Document the discussion. Frame it as a clinical-governance issue for irreversible procedures.",
+    steps:[
+      {label:"Consent is a process",guidance:"Discussed at consultation, not rushed at the chair.",prompt:"",isExp:false},
+      {label:"Material risks + alternatives",guidance:"Procedure-specific risks, alternatives, and the option of no treatment.",prompt:"",isExp:false},
+      {label:"Confirm understanding (teach-back) & document",guidance:"How do you check the patient actually understood, not just nodded?",prompt:"How do you currently confirm genuine comprehension?",isExp:true},
+    ]},
+  {
+    id:"q22",
+    category:"CLINICAL",
+    question:"During an extraction a root tip fractures close to the IAN. What do you do?",
+    trap:"TRAP: The instinct to \"retrieve it at all costs\" can cause IAN injury. The mature answer weighs retrieval against deliberately leaving a small, deep, asymptomatic fragment.",
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nStop and reassess \u2014 don't blindly chase the fragment. Radiograph, then weigh retrieval against deliberately leaving a small, deep fragment when it's asymptomatic and close to the IAN (the risk of retrieval may exceed the risk of leaving it). Informed consent for whichever path, document clearly, arrange follow-up, and escalate or refer if it's beyond your comfort.",
+    steps:[
+      {label:"Don't panic-retrieve",guidance:"Aggressive blind retrieval near the IAN is how nerve injuries happen.",prompt:"",isExp:false},
+      {label:"Decision framework: retrieve vs. leave",guidance:"Fragment size, depth, mobility, IAN proximity, infection risk \u2014 a small deep asymptomatic tip may be safer left and monitored.",prompt:"",isExp:false},
+      {label:"Consent, document, follow-up or escalate",guidance:"Whatever you decide, the patient knows, it's documented, and you escalate if needed.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q24",
+    category:"CLINICAL",
+    question:"Describe a case where you recognised something was beyond your scope.",
+    trap:"SOFT TRAP: This is a strength question in disguise \u2014 recognising scope limits IS a surgical skill. Don't pick a trivially easy case; pick one that shows real judgment.",
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nUse the non-odontogenic ED case: you recognised a parotid swelling wasn't odontogenic and outside your scope, referred to OMFS, and then worked alongside them. Frame it as judgment and patient safety \u2014 knowing the limit is a surgical skill, not a shortfall.",
+    steps:[
+      {label:"Pick a real, non-trivial example",guidance:"The parotid/non-odontogenic referral works well.",prompt:"Which case shows genuine judgment about your scope?",isExp:true},
+      {label:"What flagged it as beyond scope",guidance:"The specific features that told you this wasn't yours to manage alone.",prompt:"",isExp:false},
+      {label:"How you escalated & what you learned",guidance:"Referral, working alongside the team, and the reflection afterwards.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q26",
+    category:"CLINICAL",
+    question:"How would you manage a post-extraction haemorrhage that won't settle?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nA calm escalation ladder. Local first: pressure on damp gauze, LA with vasoconstrictor, pack the socket with a haemostatic agent (e.g. oxidised cellulose), suture, tranexamic acid mouthwash. Reassess for a systemic cause \u2014 anticoagulants, undiagnosed coagulopathy, hypertension. Escalate to medicine/haematology if it persists, and keep airway compromise in mind. Tie it to your on-call experience with bleeding patients.",
+    steps:[
+      {label:"Local measures, in order",guidance:"Pressure \u2192 LA with vasoconstrictor \u2192 haemostatic agent \u2192 suture \u2192 tranexamic mouthwash.",prompt:"",isExp:false},
+      {label:"When to suspect a systemic cause",guidance:"Medications, undiagnosed coagulopathy, hypertension \u2014 and what you'd check.",prompt:"",isExp:false},
+      {label:"Escalation & your on-call experience",guidance:"When you involve medicine/haematology; airway awareness.",prompt:"Describe a bleeding patient you've managed on call.",isExp:true},
+    ]},
+  {
+    id:"q42",
+    category:"CLINICAL",
+    question:"A patient deteriorates in the chair \u2014 how do you manage a medical emergency?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nA structured, calm approach: stop, DRSABCD, call for help / ambulance early, position the patient, give oxygen, and use emergency drugs as trained (e.g. adrenaline for anaphylaxis, glucose for hypoglycaemia, GTN for angina). Know the common chair emergencies \u2014 vasovagal syncope, hypoglycaemia, anaphylaxis, angina, seizure, aspiration. Tie to her on-call experience and current BLS/ALS certification.",
+    steps:[
+      {label:"Structured DRSABCD + call for help",guidance:"Calm, sequenced, escalate early.",prompt:"",isExp:false},
+      {label:"Common chair emergencies",guidance:"Vasovagal, hypoglycaemia, anaphylaxis, angina, seizure, aspiration.",prompt:"",isExp:false},
+      {label:"Correct emergency management + currency",guidance:"Oxygen, correct drug per scenario; current BLS/ALS.",prompt:"Her current resuscitation certification and any real chair-side emergency she's managed?",isExp:true},
+    ]},
+  {id:'q13',model:`I'll be specific, because I think vagueness on this question is a way of hiding rather than answering it.
+
+The first complication: [INSERT INTRA-OPERATIVE CASE — use SBAR: Situation: what was the case, what procedure, what patient. Complication: what happened — root fracture, IAN involvement, haemorrhage, oro-antral communication, tuberosity fracture — and when you recognised it. Action: exactly what you did immediately. Outcome: what happened for the patient. Learning: what changed in how you practise].
+
+The second: [INSERT POST-OPERATIVE CASE — dry socket, surgical site infection, post-op haemorrhage, nerve paraesthesia. Same SBAR structure. Be specific about the presentation, your clinical diagnosis, and your management].
+
+The third — and this is the one I think is most important to be honest about: [INSERT PROCESS OR COMMUNICATION COMPLICATION — a consent gap, a near-miss involving wrong-site risk, a failure of follow-up that led to a worse outcome, a communication breakdown between you and another clinician. This one shows you understand that complications aren't only technical].
+
+The through-line in all three is the same: early recognition matters more than perfect prevention, because complications in surgery are not fully preventable. What's preventable is failure to recognise, failure to escalate, and failure to communicate honestly with the patient about what happened. In each of these cases, [CLOSE WITH WHAT SPECIFICALLY CHANGED IN YOUR PRACTICE AS A RESULT].`,category:'COMPLICATIONS',question:'Three surgical complications you\'ve had to deal with',trap:'HIGH STAKES: This tests clinical honesty, not surgical perfection. Candidates who claim they\'ve never had complications, or describe only trivial ones, fail this. The question tests: did you recognise it? Did you manage it correctly? Did you learn from it?',steps:[
+    {label:'Structure for each: SBAR format',guidance:'Situation (what was the case) → Complication (what happened, when you recognised it) → Action (immediate management) → Outcome (result for patient) → Learning (what changed in your practice).',prompt:'',isExp:false},
+    {label:'Complication 1 — intra-operative',guidance:'Root displacement, IAN involvement, haemorrhage, tuberosity fracture, oro-antral communication.',prompt:'Walk through a real case. What happened? How did you recognise it? What did you do immediately?',isExp:true},
+    {label:'Complication 2 — post-operative',guidance:'Dry socket, surgical site infection, delayed healing, post-op haemorrhage, nerve paraesthesia.',prompt:'A patient who came back with a problem. How did you diagnose and manage it?',isExp:true},
+    {label:'Complication 3 — system or communication',guidance:'A process, consent, or communication failure that led to a near-miss. Shows you understand that complications are not only technical.',prompt:'A time when process, not just technique, was the issue.',isExp:true},
+    {label:'Closing statement',guidance:'"Complications are inevitable in surgery. What matters is early recognition, appropriate escalation, honest communication with the patient, and systematic reflection to prevent recurrence."',prompt:'',isExp:false},
+  ]},
+  {id:'q07',model:`Patient safety comes first. There's no version of this where I give a colleague the benefit of the doubt if I have reasonable belief they're impaired and treating patients.
+
+Under AHPRA's mandatory notification obligations, a registered practitioner who forms a reasonable belief that a colleague's impairment is placing the public at risk has a duty to notify. Reasonable belief doesn't require certainty — observable impairment is enough. I don't need a confirmed drug test result. I need to have seen enough to form that belief.
+
+My immediate steps: I would remove the colleague from patient care if it was safe and within my authority to do so — or raise it with the department head immediately if it wasn't. I would document exactly what I observed, factually, without interpretation. And I would notify AHPRA if the concern met the mandatory notification threshold, which impairment placing the public at risk clearly does.
+
+The welfare dimension matters, and I take it seriously — but it comes second, not first. Once patients are protected, I would want to support the colleague in accessing help — EAP, occupational health, their own treating practitioner. A colleague who is dependent on substances is also a person who needs support. But that support cannot come at the cost of patient safety, and it cannot be used to rationalise delay in notifying.
+
+What I won't do: I won't have a quiet word and hope it resolves. I won't give them the benefit of the doubt because I value the working relationship. I won't delay notification because I'm worried about their career. Those are the responses that lead to patient harm.`,category:'PROFESSIONALISM',question:'A colleague is using recreational drugs — how do you handle it?',trap:'TRAP: There is only one right answer and it\'s not "I\'d have a quiet word with them." Failure to report is a mandatory notification issue under AHPRA. Candidates who hedge or prioritise collegiality over patient safety fail this question.',steps:[
+    {label:'Lead with patient safety — no hesitation',guidance:'"My primary obligation is patient safety. If I have reasonable belief a colleague is impaired, I have a duty to act — both ethically and under AHPRA mandatory notification obligations."',prompt:'',isExp:false},
+    {label:'What "reasonable belief" means',guidance:'You don\'t need certainty. Observable impairment — behavioural changes, errors, smell, direct evidence — is sufficient to trigger a duty.',prompt:'',isExp:false},
+    {label:'Immediate action steps',guidance:'(1) Remove colleague from patient care if safe to do so. (2) Escalate to supervisor/department head immediately. (3) Document what you observed factually. (4) Notify AHPRA if the concern meets the mandatory notification threshold.',prompt:'',isExp:false},
+    {label:'Welfare — second, not first',guidance:'Acknowledge this is also a welfare issue and that you\'d support the colleague accessing EAP or occupational health. But this comes after patient safety, not instead of it.',prompt:'',isExp:false},
+    {label:'What you do NOT say',guidance:'"I\'d give them the benefit of the doubt." "I\'d have a quiet word first." "I wouldn\'t want to ruin their career." These are failing answers.',prompt:'',isExp:false},
+  ]},
+  {
+    id:"q27",
+    category:"PROFESSIONALISM",
+    question:"A consultant asks you to perform a procedure you don't feel competent to do. What do you do?",
+    trap:"TRAP: \"I'd just do it because they're senior\" fails \u2014 it's a patient-safety and boundary issue. Flat refusal with no communication also fails.",
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nPatient safety sits above hierarchy. Respectfully decline to proceed unsupervised, explain specifically where your competence ends, and offer the safe alternative \u2014 supervision, or the consultant performing it while you assist and learn. Document. Seniority doesn't override your professional responsibility for a patient on your hands.",
+    steps:[
+      {label:"Patient safety over hierarchy",guidance:"The patient's safety is the fixed point, not the power gradient.",prompt:"",isExp:false},
+      {label:"Respectful, specific communication",guidance:"Name exactly where your competence ends \u2014 not a vague refusal.",prompt:"",isExp:false},
+      {label:"Offer the safe alternative",guidance:"Supervision, or them doing it with you assisting \u2014 turn it into a learning opportunity.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q29",
+    category:"PROFESSIONALISM",
+    question:"You realise you've made an error the patient hasn't noticed. What do you do?",
+    trap:"HIGH STAKES: The honest answer is open disclosure. \"If they didn't notice, no harm done\" is a serious professionalism failure the panel is listening for.",
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nOpen disclosure, without hesitation. Tell the patient, apologise sincerely, explain what happened and the plan to put it right, document it, and report it through clinical governance. The fact that they didn't notice changes nothing \u2014 honesty is the professional obligation, and concealment is the real risk to them and to your registration.",
+    steps:[
+      {label:"Open disclosure is non-negotiable",guidance:"Whether or not the patient noticed.",prompt:"",isExp:false},
+      {label:"What disclosure looks like in practice",guidance:"Factual explanation, sincere apology, remediation plan, documentation, incident report.",prompt:"",isExp:false},
+      {label:"Why concealment is the real risk",guidance:"To the patient's health, to trust, and to your registration.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q28",
+    category:"PROFESSIONALISM",
+    question:"A patient demands extraction of restorable teeth. How do you handle it?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nBalance patient autonomy against your professional obligation. Explore the real reason (cost, fear, a past experience), inform them clearly of the consequences of extracting restorable teeth, offer the alternatives, and document. You can respect autonomy while declining to provide irreversible treatment that isn't in their interest.",
+    steps:[
+      {label:"Explore the reason behind the request",guidance:"Cost, dental fear, a prior bad experience \u2014 the demand usually has a cause.",prompt:"Have you faced this? What was driving it?",isExp:true},
+      {label:"Inform, offer alternatives, respect autonomy",guidance:"Consequences, restorative options, shared decision-making.",prompt:"",isExp:false},
+      {label:"You may decline non-indicated irreversible treatment",guidance:"Autonomy doesn't oblige you to provide harmful care; document the discussion.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q40",
+    category:"PROFESSIONALISM",
+    question:"How do you handle a patient complaint about your care?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nNon-defensive and governance-minded. Listen without defensiveness, acknowledge genuinely, investigate the facts, respond and remediate, document, and feed it back through clinical governance. A complaint is quality data, not a personal attack \u2014 and it should change something.",
+    steps:[
+      {label:"Listen without defensiveness",guidance:"Acknowledge the concern genuinely first.",prompt:"",isExp:false},
+      {label:"Investigate and remediate",guidance:"Factual review, response, documentation.",prompt:"",isExp:false},
+      {label:"Governance + learning",guidance:"Complaint as quality data; what changes as a result.",prompt:"A complaint or feedback she's actually acted on?",isExp:true},
+    ]},
+  {
+    id:"q41",
+    category:"PROFESSIONALISM",
+    question:"A patient lacks capacity to consent \u2014 how do you proceed?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nCapacity is decision-specific and presumed unless assessed otherwise. Assess it; if the patient lacks capacity, act in their best interests and involve the substitute decision-maker / guardian per NSW law, choosing the least-restrictive option, and document the basis. In a genuine emergency, the doctrine of necessity applies. Don't proceed with elective surgery on an incapacitated patient without the proper process.",
+    steps:[
+      {label:"Capacity is decision-specific & presumed",guidance:"Presumed unless a proper assessment shows otherwise.",prompt:"",isExp:false},
+      {label:"If lacking: best interests + substitute consent",guidance:"Substitute decision-maker / guardian per NSW; least-restrictive option.",prompt:"",isExp:false},
+      {label:"Emergency vs elective; document",guidance:"Necessity in emergencies; never elective surgery without process.",prompt:"",isExp:false},
+    ]},
+  {id:'q16',model:`I don't avoid conflict — I've had disagreements with colleagues, and pretending otherwise wouldn't be credible in a clinical environment where people have strong views about complex decisions.
+
+My approach is direct and early. Letting a conflict sit and fester in a clinical environment costs patient care — decisions get made by avoidance rather than judgment. So I address it directly, with the person, not by email, not through a third party.
+
+The structure I try to apply: separate the person from the issue, because in most clinical disagreements the conflict is about a clinical or professional matter rather than the relationship. And try to find the underlying interest rather than arguing over stated positions — often two people disagreeing about a treatment plan are actually worried about different things, and that's findable.
+
+A specific example: [INSERT REAL CONFLICT EXAMPLE — disagreement with a colleague about a treatment plan, a referral that was rejected, a clinical decision you disagreed with a senior about, a scheduling conflict that affected patient care. Walk through: what was the issue, what did you do, what was the outcome].
+
+The escalation point is important. If a conflict involves patient safety, professional conduct, or something that crosses into discrimination or harassment, the informal resolution approach is not appropriate. I know the difference, and I know when to escalate formally. The obligation to the patient or the institution supersedes the obligation to maintain a comfortable working relationship.`,category:'PROFESSIONALISM',question:'Managing conflicts with colleagues',trap:'TRAP: Don\'t say you avoid conflict or "always find common ground." This sounds unbelievable and suggests you either avoid difficult conversations or don\'t recognise conflict when it occurs.',steps:[
+    {label:'Acknowledge conflict is normal — don\'t apologise for it',guidance:'"Conflict in a clinical environment is inevitable when there are competing priorities, limited resources, and high-stakes decisions. The question is how you manage it, not whether it happens."',prompt:'',isExp:false},
+    {label:'Your structured approach',guidance:'(1) Address directly and early — not by email, not via third parties. (2) Separate the person from the issue. (3) Identify the underlying interest, not just the stated position. (4) Escalate appropriately if unresolved.',prompt:'',isExp:false},
+    {label:'A real example',guidance:'You need one. It doesn\'t have to be dramatic — a disagreement about a treatment plan, a referral being rejected, a scheduling conflict with patient impact.',prompt:'A specific disagreement with a colleague, senior, or another specialty. What was the issue? What did you do? What was the outcome?',isExp:true},
+    {label:'When to escalate',guidance:'If the conflict involves patient safety, professional conduct, or discrimination — this is not a conflict to resolve informally. State explicitly that you know when escalation is the right call.',prompt:'',isExp:false},
+  ]},
+  {id:'q01',model:`At Westmead I participate in three audit cycles: IMS — which covers infection control compliance, sterilisation protocols and PPE — peer review, where we discuss complex cases and treatment planning decisions as a team, and records audits, which examine consent documentation and referral completeness. My role in each is as a participant and reviewer rather than lead — I've been the person checking records against the standard, flagging non-conformances, and feeding findings back to the team.
+
+The part that mattered most was what changed. In one records audit we identified inconsistent pre-operative radiograph documentation for surgical cases — OPGs weren't always recorded in the notes even when taken. We updated our pre-extraction surgical checklist as a direct result. That's the point of audit: not the data collection, but the practice change.
+
+Looking ahead to an oral surgery training environment, I'd expect audit to extend further — to surgical site infection rates, complication frequency and type, consent quality for irreversible procedures, and follow-up attendance rates. These are the metrics that tell you whether a surgical service is actually safe, not just compliant.`,category:'GOVERNANCE',question:'What audits are you involved in?',trap:null,steps:[
+    {label:'Name the audits with purpose',guidance:'State each audit clearly — IMS, peer review, records audit. Don\'t just list them. Briefly say what each one measures.',prompt:'e.g. IMS: infection control compliance, PPE, sterilisation protocols. Peer review: case discussion, treatment planning alignment. Records audit: consent documentation, referral completeness.',isExp:false},
+    {label:'Your specific role in each',guidance:'Were you a participant, initiator, reviewer, panel member? Say it specifically.',prompt:'e.g. "At Westmead I participate in quarterly records audits — my role is reviewing consent documentation for surgical cases."',isExp:true},
+    {label:'What changed as a result',guidance:'This is the part most candidates skip. Examiners want to know audits drove change, not just happened.',prompt:'e.g. "One audit identified inconsistent pre-op radiograph documentation — we updated our pre-extraction checklist as a result."',isExp:true},
+    {label:'Closing link to oral surgery',guidance:'Tie it to the surgical context: "In a surgical setting, I\'d expect audit to extend to surgical site infection rates, consent quality, and complication documentation."',prompt:'',isExp:false},
+  ]},
+  {id:'q02',model:`Clinical governance is the framework through which health organisations are accountable for continuously improving quality and safeguarding standards — it's the system that makes safety and improvement structural rather than dependent on individual goodwill.
+
+In practice, I engage with it across several pillars. Audit I've covered — at Westmead that's ongoing. Education and training is part of every clinical session, both receiving and contributing to it. Risk management comes into every surgical case in how I assess and document, how I escalate, how I obtain consent. Patient experience feeds directly into that — and I've had cases where patient feedback genuinely changed my practice. [INSERT SPECIFIC EXAMPLE].
+
+The patient's role is something I think about carefully. Informed consent isn't just a legal formality — it's the patient exercising governance over their own care. When a patient asks why we're extracting rather than restoring, or raises a concern about a proposed treatment plan, that's governance functioning correctly. Patient complaints are quality data. In the public hospital setting, consumer advisory input into service design is a genuine mechanism — not just tokenistic.
+
+In oral surgery specifically, this matters more than in most dental disciplines. We're doing irreversible procedures, often under sedation or GA. The quality of the consent process, and the patient's genuine comprehension of it, is a governance issue with direct clinical consequences.`,category:'GOVERNANCE',question:'Clinical governance role in oral surgery — what is a patient\'s role in governance?',trap:null,steps:[
+    {label:'Define clinical governance briefly',guidance:'"Clinical governance is the system by which organisations are accountable for continuously improving quality and safeguarding high standards of care."',prompt:'',isExp:false},
+    {label:'Core pillars you have participated in',guidance:'Pick 4–5: audit, education & training, risk management, patient experience, evidence-based practice, staffing & performance.',prompt:'Which of these have you directly participated in at Westmead or Kings Family?',isExp:true},
+    {label:'Patient\'s role in governance',guidance:'(1) Informed consent as governance. (2) Patient feedback/complaints as quality data. (3) Patient involvement in service design. (4) Patients as safety partners — speaking up if something feels wrong.',prompt:'Have you ever acted on patient feedback to change your practice? Even one example.',isExp:true},
+    {label:'Oral surgery specific link',guidance:'Consent for irreversible procedures, shared decision-making for extractions vs. restoration, managing patient anxiety as a governance issue.',prompt:'',isExp:false},
+  ]},
+  {id:'q03',model:`Evidence-based practice means integrating three things simultaneously: the best available external evidence, my own clinical expertise and judgment, and the patient's values and preferences. The mistake is treating it as just "looking things up" — without clinical judgment, the evidence can't be applied, and without patient values, the right treatment for the condition may be the wrong treatment for the person.
+
+A specific example: I had a patient on warfarin who needed a surgical extraction. The default at the time in the practice was to refer back to the medical team for bridging therapy. I reviewed the current evidence — particularly the literature on local haemostatic measures — and found that for most patients with an INR in the therapeutic range, extraction with local haemostasis is safer than bridging, because bridging carries real thromboembolic risk. I discussed that evidence with the patient's GP and we proceeded with local measures. That's EBP in practice — it changed what we did, and the outcome justified it. [REPLACE WITH YOUR SPECIFIC ANTICOAGULANT OR BISPHOSPHONATE OR OTHER CASE].
+
+I'm also aware that evidence in oral surgery has significant limitations. RCT evidence is sparse for many surgical questions — the hierarchy of evidence needs to account for that. Systematic reviews, expert consensus guidelines, and well-designed retrospective audits fill real gaps. The Cochrane reviews on third molar surgery, for instance, inform my practice even though the evidence is graded moderate at best.
+
+Going forward, I want to be a contributor to that evidence base, not just a consumer of it. The GradDip research project is a genuine opportunity — I'm interested in [INSERT RESEARCH INTEREST], which is an area where the existing literature has clear gaps.`,category:'EVIDENCE',question:'Evidence-based research — significance and impact on your practice',trap:null,steps:[
+    {label:'Define EBP correctly — three pillars',guidance:'Best available evidence + clinical expertise + patient values/preferences. Don\'t just say "using research."',prompt:'',isExp:false},
+    {label:'A specific example from your practice',guidance:'Name a clinical question you had, what you looked up, what you found, and what changed in your practice.',prompt:'e.g. "I had a patient on anticoagulants needing extraction — I reviewed current evidence on pre-op INR thresholds and local haemostatic measures, which changed my management away from defaulting to bridging therapy."',isExp:true},
+    {label:'Acknowledge limitations of evidence',guidance:'Evidence has hierarchy; RCT evidence in oral surgery is often limited; expert consensus guidelines fill gaps. Shows intellectual maturity.',prompt:'',isExp:false},
+    {label:'Link to being a contributor, not just consumer',guidance:'You intend to contribute to the evidence base — research project, audit, case reporting. Forward-looking.',prompt:'Any research interest, even early-stage, you can name here?',isExp:true},
+  ]},
+  {id:'q12',model:`Public health is the science and practice of protecting and improving the health of populations through policy, education, research, and preventive measures — the defining feature is the population rather than the individual as the unit of concern.
+
+In dentistry, the classic examples are water fluoridation — one of the most cost-effective public health interventions in any field — school dental programs, tobacco cessation campaigns given the direct link between smoking and oral cancer and periodontal disease, and sugar taxation as a downstream lever on caries rates. In Australia specifically, the Aboriginal and Torres Strait Islander oral health gap is a public health failure with decades of documented evidence and insufficient systemic response.
+
+What I want to say directly is that I'm already delivering public health dentistry. At Westmead, the patient population I see is not the private dental patient. These are patients who've avoided care because of cost or access or fear, who present with advanced disease, who have complex medical histories that private practices often refer on. Managing odontogenic infections that have progressed to fascial space involvement because the patient couldn't access timely care — that's a public health failure presenting to me as a clinical case.
+
+The research coming out of the Nepean district on dental infections requiring hospitalisation is directly relevant here — 102 admissions over two years, 68% presenting outside regular working hours, the majority having already received antibiotics from a GP without active dental treatment. That's a system problem, not an individual clinical failure. On-call emergency dental services, better GP-dental integration, and improved access models are public health solutions to a problem I see the consequences of every week.`,category:'PUBHEALTH',question:'What is public health and some examples of public health?',trap:null,steps:[
+    {label:'Definition — population focus',guidance:'"Public health is the science and practice of protecting and improving the health of populations through education, policy, research, and preventive measures — focused on communities rather than individuals."',prompt:'',isExp:false},
+    {label:'Examples relevant to oral health',guidance:'(1) Water fluoridation. (2) School dental programs. (3) Tobacco cessation campaigns. (4) Sugar taxes and dietary policy. (5) Aboriginal and Torres Strait Islander oral health programs. (6) Hospital public dental services for disadvantaged populations.',prompt:'',isExp:false},
+    {label:'You are already delivering public health dentistry',guidance:'Westmead is a public hospital. The patients you see — medically complex, socioeconomically diverse, referred from the public waitlist — are the people public health is designed to serve. Own this directly.',prompt:'What patient populations do you see at Westmead you wouldn\'t see in private? Any specific health equity issues you\'ve encountered?',isExp:true},
+    {label:'Oral surgery and public health intersection',guidance:'Oral cancer screening, access to surgical care for underserved populations, management of odontogenic infections in patients who\'ve avoided dental care — these are public health issues oral surgeons directly address.',prompt:'',isExp:false},
+  ]},
+  {id:'q11',model:`My research experience to date is at the audit and quality improvement end of the spectrum rather than primary research. [INSERT SPECIFIC: audit participation at Westmead, any case reviews, departmental QA work, structured case presentations at clinical meetings, literature reviews for specific clinical questions]. I haven't published, and I'm not going to overstate that. But I understand the methodology of clinical audit — designing the standard, measuring against it, identifying the gap, implementing change, re-auditing — and I know how to distinguish that from research, which generates new knowledge rather than measuring practice against existing standards.
+
+My research interest is [INSERT SPECIFIC AREA]. I'm drawn to it because [CLINICAL REASON — a problem you keep encountering, a gap in the evidence you've noticed, a patient population where better evidence would change practice]. The existing literature in this area has specific gaps: [NAME ONE OR TWO].
+
+I'm aware that this program requires a research project each semester. I'm approaching that requirement as an opportunity rather than an obligation. I'd like to discuss supervisor availability and whether [YOUR INTEREST AREA] maps onto any current departmental research directions — that's one of my questions for you today if we get to it.`,category:'RESEARCH',question:'What research have you done and what are your research interests?',trap:null,steps:[
+    {label:'What you have actually done — be honest about level',guidance:'Case reports, audit participation, QA projects, literature reviews, departmental presentations all count. You don\'t need a publication — but you need something.',prompt:'Any audit involvement at Westmead? Case reviews, presentations, departmental work? Even a structured case presentation at a clinical meeting counts.',isExp:true},
+    {label:'Research interest — one focused area',guidance:'Don\'t say "I\'m interested in oral surgery research." Name an area: third molar outcomes, surgical site infection, peri-implant disease, MRONJ management, oral cancer screening.',prompt:'What clinical problems do you keep encountering where you wish there was better evidence?',isExp:true},
+    {label:'The GradDip research project — show readiness',guidance:'This program requires a research project each semester. Show you understand this and are approaching it with intent, not as a box to tick.',prompt:'Do you have a topic area in mind already? Even a rough question is better than nothing.',isExp:true},
+    {label:'Audit vs research distinction',guidance:'Show you understand the difference — audit measures against a standard, research generates new knowledge. Candidates who conflate them look poorly prepared.',prompt:'',isExp:false},
+  ]},
+  {
+    id:"q33",
+    category:"RESEARCH",
+    question:"How do you keep up to date with the evidence?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nName specific sources (e.g. BJOMS, IJOMS, Cochrane oral health, ADA and specialty guidelines), and show you appraise rather than just read \u2014 you weigh study quality and applicability. Then link forward: the GradDip research project is where you move from consuming evidence to contributing to it.",
+    steps:[
+      {label:"Name specific sources",guidance:"BJOMS, IJOMS, Cochrane oral health, ADA / specialty guidelines \u2014 specifics signal a real habit.",prompt:"",isExp:false},
+      {label:"Appraise, don't just read",guidance:"Show you weigh study quality and applicability.",prompt:"",isExp:false},
+      {label:"Your current habit",guidance:"Be honest and specific about what you actually read.",prompt:"What do you read regularly?",isExp:true},
+    ]},
+  {id:'q06',model:`My CPD over the last two years has been deliberately pointed toward oral surgery rather than general dentistry broadly, which reflects where I intend to take my career.
+
+[INSERT FULL CPD LIST WITH DATES — courses, webinars, conferences, journal clubs, hospital education sessions. For each one, note what changed in your practice, not just what the topic was.]
+
+The surgical-specific activities that matter most to me are [INSERT: any skills days, sedation training, implant courses, trauma management, cadaver workshops if applicable]. These are the ones that directly developed operative competence rather than just knowledge.
+
+Outside formal CPD, I read the Australian Dental Journal and the British Journal of Oral and Maxillofacial Surgery regularly. [INSERT ANY SPECIFIC PAPERS OR TOPICS YOU'VE FOLLOWED]. I'm aware of the recent audit work coming out of the Nepean district on odontogenic infections requiring hospitalisation — that kind of translational research, connecting public hospital data to practice change, is the type of evidence I find most directly applicable to what I do at Westmead.
+
+Going forward, [INSERT PLANNED CPD — ideally something oral surgery-adjacent already booked or in progress].`,category:'CPD',question:'What CPD have you done?',trap:null,steps:[
+    {label:'List with intent — not just titles',guidance:'Don\'t recite course names. For each activity: what did you learn, and how did it change your practice?',prompt:'List every CPD activity in the last 2 years — courses, webinars, conferences, journal clubs, hospital education sessions.',isExp:true},
+    {label:'Oral surgery-specific CPD',guidance:'Anything directly surgical — IV sedation, implants, surgical technique courses, trauma management — should be named specifically.',prompt:'Any surgical skills days, cadaver workshops, simulation training?',isExp:true},
+    {label:'Evidence of self-directed learning',guidance:'Journal reading, textbook use, online modules. Shows you don\'t just clock mandatory hours.',prompt:'What do you read regularly? Any specific journals or texts (e.g. BJOMS)?',isExp:true},
+    {label:'Forward-looking CPD intention',guidance:'What CPD are you planning? Ideally something oral surgery-adjacent — shows the trajectory is already pointing toward this program.',prompt:'',isExp:false},
+  ]},
+  {id:'q14',model:`I've taught in [INSERT CONTEXTS — dental students at Westmead, junior staff at Kings Family, any formal teaching sessions, chairside teaching during procedures]. The most valuable teaching I've done has been informal and operative — explaining what I'm doing and why, mid-procedure, to someone watching. That's harder than it sounds, because it requires you to articulate assumptions you've made automatically.
+
+What teaching has revealed to me about my own practice: [INSERT SPECIFIC MOMENT — a time where trying to explain something made you realise you hadn't consciously examined your own reasoning]. That's the best argument for teaching as a component of training — it forces self-examination.
+
+The biggest challenge I anticipate is one that the evidence actually documents: ensuring learners get sufficient operative time in a busy clinical environment. The temptation — and I've felt it — is to take over when a case is going slowly or getting difficult, because it's faster and feels safer. But that robs the learner of exactly the experience they need. The research on COVID's impact on dental student surgical training showed clearly that reduced supervised operative exposure produced graduates with less confidence and competence. That finding should make every supervisor more deliberate about handing over rather than taking back.
+
+The second challenge is calibrating feedback. Telling a learner they're not progressing, or that a specific behaviour needs to change, is uncomfortable. But vague positive feedback is useless and actively misleading. I'd rather have a difficult honest conversation than watch someone leave training without the skills they needed.`,category:'TEACHING',question:'Experience in teaching — biggest challenge you anticipate when teaching',trap:null,steps:[
+    {label:'Your actual teaching experience',guidance:'Be specific: teaching dental students, junior staff, other trainees. Formal sessions vs informal chairside teaching. Any curriculum design involvement.',prompt:'Who have you taught? In what setting? Any formal teaching roles at Westmead?',isExp:true},
+    {label:'What teaching has taught you about yourself',guidance:'The best answer shows teaching changed how you think clinically — explaining a procedure forces you to articulate assumptions you didn\'t know you held.',prompt:'A moment where teaching someone made you realise something about your own practice.',isExp:true},
+    {label:'Biggest challenge — be honest and specific',guidance:'Strong answers: (1) Pitching explanation to the learner\'s actual knowledge level, not your assumption of it. (2) Teaching under time pressure — the temptation to "just do it." (3) Managing a learner who isn\'t progressing.',prompt:'Which of these resonates most with your actual experience?',isExp:true},
+    {label:'What NOT to say',guidance:'"Keeping them engaged" — too generic, no clinical insight. Every candidate says this.',prompt:'',isExp:false},
+  ]},
+  {id:'q15',model:`Leadership in oral surgery starts at the chair, not the committee room. In a surgical environment, the oral surgeon is directing the team — communicating with the scrub nurse, managing the assistant, coordinating with anaesthetics, making time-sensitive decisions about how to proceed when the operative picture changes. That's leadership in the most direct sense: people are following your judgment in real time.
+
+At a departmental level, leadership shows up in audit participation, in protocol development, in contributing to how training is structured. [INSERT IF APPLICABLE: any committee involvement, working group, protocol you've contributed to or suggested, quality improvement initiative at Westmead].
+
+Teaching is a form of leadership that I take seriously. Investing in the competence of the next generation of practitioners shapes the specialty over time in a way that individual clinical work doesn't. The oral surgeon who commits to genuine trainee development — not just supervision, but deliberate teaching — has a multiplier effect on the profession.
+
+My own leadership style is collaborative but directive when it needs to be. In a clinical environment, there are moments when discussion is appropriate and moments when someone needs to give a clear instruction. I've learned to distinguish between them. [INSERT SPECIFIC EXAMPLE of taking the lead — clinical decision, team communication, managing a difficult situation].`,category:'TEACHING',question:'What is the oral surgeon\'s role in leadership?',trap:null,steps:[
+    {label:'Clinical leadership at the chair — start here',guidance:'The oral surgeon leads the surgical team — directing nurses, assistants, communicating with anaesthetists. Decision-making authority in the operating environment is leadership. Don\'t start with management committees.',prompt:'',isExp:false},
+    {label:'Departmental and institutional leadership',guidance:'Audit lead, committee membership, protocol development, curriculum contribution. Even as a trainee you can contribute — show you\'re thinking about this.',prompt:'Any committee or working group involvement at Westmead? Any protocol you\'ve contributed to or suggested?',isExp:true},
+    {label:'Teaching as leadership',guidance:'Training the next generation is professional leadership. The oral surgeon who invests in trainee development shapes the specialty.',prompt:'',isExp:false},
+    {label:'Your leadership style — briefly',guidance:'Don\'t just describe what leadership is. Say something about how you lead. Collaborative? Evidence-driven? Do you lead by example at the chair?',prompt:'A time you took the lead on something, even informally — clinical decision, team communication, process improvement.',isExp:true},
+  ]},
+  {
+    id:"q34",
+    category:"TEACHING",
+    question:"How do you communicate with an anxious patient before a surgical extraction?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nBuild rapport, acknowledge the fear rather than dismissing it, use plain language, set out what to expect step by step, and give the patient a sense of control (e.g. an agreed signal to pause). Consent done well is itself reassuring. Ground it in a real anxious patient you've managed.",
+    steps:[
+      {label:"Acknowledge anxiety; plain language",guidance:"Name the fear, drop the jargon.",prompt:"",isExp:false},
+      {label:"Concrete techniques",guidance:"Pacing, what-to-expect narration, an agreed pause signal, giving control.",prompt:"",isExp:false},
+      {label:"A specific anxious patient",guidance:"A real example lands far better than theory.",prompt:"Describe an anxious patient you guided through a procedure.",isExp:true},
+    ]},
+  {
+    id:"q35",
+    category:"TEACHING",
+    question:"What is your role within a multidisciplinary team?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nOral surgery sits at the interface of dentistry, medicine and surgery, so you're both a contributor and a communicator \u2014 sharing the dental/surgical assessment clearly and coordinating with OMFS, anaesthetics, medicine, and pathology. Ground it in a real Westmead MDT interaction. (This is about collaboration and membership, distinct from the leadership question.)",
+    steps:[
+      {label:"Where oral surgery sits in the MDT",guidance:"The dentistry\u2013medicine\u2013surgery interface \u2014 you bring a specific expertise to a shared table.",prompt:"",isExp:false},
+      {label:"You as contributor and communicator",guidance:"Clear handover, clear scope, knowing when to defer to another discipline.",prompt:"",isExp:false},
+      {label:"A real MDT interaction",guidance:"A concrete example from Westmead.",prompt:"An MDT case you were part of \u2014 what was your role?",isExp:true},
+    ]},
+  {id:'q10',model:`My strongest attribute clinically is adaptability under pressure. I've had cases where the intra-operative picture was materially different from what the radiograph suggested — and the outcome depended on making a calm decision about how to proceed rather than pushing ahead with the original plan. [INSERT SPECIFIC EXAMPLE]. That capacity to reassess mid-procedure without escalating to panic is something I've developed through experience, and I think it's a genuine surgical asset.
+
+The second strength I'd name is patient communication, particularly with anxious patients. A significant proportion of the patients I see — especially at Westmead — arrive with dental fear that has already delayed treatment to the point of complication. Managing that anxiety well isn't just kindness; it's clinical. [INSERT SPECIFIC EXAMPLE of managing a highly anxious or avoidant patient].
+
+My genuine weakness — and I want to be specific rather than give you a comfortable answer — is [INSERT REAL WEAKNESS: e.g. surgical speed and efficiency in complex third molar cases, experience with certain anatomical variants, managing conflict with senior colleagues, experience with specific procedure types]. I'm aware of it because [SPECIFIC EVIDENCE — what a supervisor said, a case that exposed it, a pattern you've noticed]. What I'm doing about it: [CONCRETE ACTION — specific CPD, deliberate practice focus, seeking supervised exposure to that case type].`,category:'SELF',question:'Strengths and weaknesses',trap:'TRAP: "My weakness is I\'m a perfectionist" is not an answer. It signals lack of self-awareness and every panel has heard it hundreds of times. Name a real weakness.',steps:[
+    {label:'Strengths — specific and evidence-based',guidance:'Pick 2–3 genuine strengths. For each: name it, give an example that demonstrates it, link it to oral surgery.',prompt:'e.g. Clinical adaptability — describe a case where you had to change approach mid-procedure. OR Patient communication — describe managing an anxious surgical patient.',isExp:true},
+    {label:'Weakness — real, with mitigation plan',guidance:'Format: "One area I\'m working on is [genuine gap]. I\'m aware of this because [specific evidence]. Here\'s what I\'m doing about it [concrete action]."',prompt:'Consider — surgical confidence in complex cases? Speed and efficiency? Experience with specific procedure types? What does your supervisor actually say?',isExp:true},
+    {label:'Calibrate the weakness correctly',guidance:'The weakness should be real but not disqualifying for oral surgery. A weakness in endodontics is fine. A weakness in managing surgical complications is not the thing to lead with.',prompt:'',isExp:false},
+  ]},
+  {
+    id:"q43",
+    category:"SELF",
+    question:"Why should we choose you over other applicants?",
+    trap:"SOFT TRAP: Her warm, narrative style will fumble the direct competitive question. It needs crisp, confident differentiators \u2014 not modesty or deflection.",
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nThree crisp differentiators, delivered without arrogance or hedging: (1) operative experience already underway \u2014 surgical extractions she does and teaches, plus on-call trauma; (2) the overseas pathology exposure as a distinct asset; (3) clarity about the pathway and commitment to the full DClinDent route. Confident, specific, brief.",
+    steps:[
+      {label:"Own it without arrogance",guidance:"Confident, not modest, not boastful.",prompt:"",isExp:false},
+      {label:"Two or three specific differentiators",guidance:"Operative + teaching + overseas asset + pathway commitment.",prompt:"Which 2-3 would she lead with?",isExp:true},
+      {label:"Keep it tight",guidance:"Punchy beats comprehensive here.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q44",
+    category:"SELF",
+    question:"What would your supervisors say about you?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nSpecific, credible attributes ideally tied to real feedback \u2014 name two or three things a supervisor has actually observed (e.g. reliable under pressure on call, teaches well, knows when to escalate), plus one genuine growth area she's working on (consistent with her strengths/weaknesses answer). Avoid generic praise.",
+    steps:[
+      {label:"Two or three concrete attributes",guidance:"Credible and specific, not 'hardworking and reliable'.",prompt:"What have her supervisors actually said?",isExp:true},
+      {label:"Tie to real observations",guidance:"Plausible, grounded in real feedback.",prompt:"",isExp:false},
+      {label:"One genuine growth area",guidance:"Consistent with her weakness answer; shows self-awareness.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q30",
+    category:"SELF",
+    question:"How do you handle feedback and criticism?",
+    trap:null,
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nShow you actively seek feedback rather than merely tolerate it, and prove it with a specific time feedback changed your practice. Surgical training is feedback-dense and correction-heavy, so the panel is really asking whether you're coachable \u2014 demonstrate that you are.",
+    steps:[
+      {label:"You seek feedback, not just survive it",guidance:"Frame it as something you actively want.",prompt:"",isExp:false},
+      {label:"A specific time feedback changed your practice",guidance:"Concrete > abstract. What did a supervisor say, and what did you change?",prompt:"A piece of feedback you acted on \u2014 what changed?",isExp:true},
+      {label:"Link to surgical training",guidance:"Training is feedback-dense; show you're ready for that.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q31",
+    category:"SELF",
+    question:"How do you cope with stress, on-call pressure, and fatigue?",
+    trap:"SOFT TRAP: Don't claim you never feel stress, and don't list only generic self-care. Show specific strategies and awareness that fatigue is a patient-safety issue.",
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nAcknowledge stress is real, then name specific strategies that actually work for you, including peer and supervisor support. Crucially, frame fatigue as a patient-safety issue \u2014 recognising when you're impaired enough to need to escalate or hand over is part of safe surgical practice. Ground it in your real on-call experience.",
+    steps:[
+      {label:"Acknowledge it's real; name specific strategies",guidance:"Specific and personal beats a generic self-care list.",prompt:"What actually works for you on call?",isExp:true},
+      {label:"Fatigue as a patient-safety issue",guidance:"Knowing when to escalate or hand over is safe practice, not weakness.",prompt:"",isExp:false},
+      {label:"Peer & supervisor support",guidance:"Show you don't carry it alone.",prompt:"",isExp:false},
+    ]},
+  {
+    id:"q32",
+    category:"SELF",
+    question:"Tell us about a time you failed.",
+    trap:"TRAP: A disguised non-failure (\"I work too hard\") fails. So does a real failure with no learning. Pick a genuine one, with insight and a concrete change.",
+    model:"\u2699 DRAFT SCAFFOLD \u2014 direction only; build the full answer with Ani.\n\nPick a genuine failure \u2014 clinical or professional \u2014 describe what you did in the moment, and be specific about what changed in your practice afterwards. The panel is testing maturity and insight, not perfection. A real failure honestly owned is far stronger than a polished non-answer.",
+    steps:[
+      {label:"Pick a genuine failure",guidance:"Real, owned, and not trivial.",prompt:"A real failure \u2014 clinical or professional?",isExp:true},
+      {label:"What you did in the moment",guidance:"How you responded matters as much as the failure itself.",prompt:"",isExp:false},
+      {label:"What specifically changed afterwards",guidance:"The concrete learning is the point of the answer.",prompt:"",isExp:false},
+    ]},
+  {id:'q08',model:`The transition from supervised to fully independent surgical practice is the challenge I think about most honestly. During training there's always a consultant, a safety net, someone to escalate to. When that's gone, the judgment calls are entirely mine — on case selection, on when to stop and refer, on how to manage an intra-operative complication that's going beyond my comfort level. Building the internal threshold for when to ask for help, and the professional network to ask, before that transition happens is something I'm actively working on.
+
+The second challenge is the medically complex patient. Oral surgery patients are older, sicker, and on more medications than the average dental patient. Managing a surgical case in a patient with active cardiac disease, or renal impairment, or a haematological condition requires a level of medical interface that goes beyond most dental training. The GradDip is where I intend to develop that systematic approach — but I'm under no illusion that one year gives me everything. Building relationships with medical colleagues and maintaining the habit of seeking advice is a career-long practice.
+
+The third is building a referral base. Technical competence doesn't create a practice — referring dentists need to trust you, and that trust is built over years through consistent communication, reliable outcomes, and professional relationships. Whether I end up in a public or private setting, that professional identity-building takes deliberate effort.
+
+[IF RELEVANT: The fourth challenge — and I raise it because I think it's honest — is that as an international graduate in a specialty where most practitioners are Australian-trained, I've had to be more deliberate about demonstrating competence and building credibility. That's not a complaint — it's made me more rigorous. But it's a real factor in how I've had to approach my career, and it'll continue to be.]`,category:'FUTURE',question:'Challenges you will face when you finish the course',trap:null,steps:[
+    {label:'Avoid soft challenges',guidance:'"Time management" or "work-life balance" wastes this answer. Pick real clinical and professional challenges that show self-awareness about the specialty.',prompt:'',isExp:false},
+    {label:'Challenge 1 — independent surgical practice',guidance:'Transition from supervised to unsupervised operative decision-making. No registrar safety net. How will you manage: low threshold for seeking advice, peer networks, continuing mentorship.',prompt:'Are there cases now where you still feel uncertain? That self-awareness is exactly the right tone.',isExp:true},
+    {label:'Challenge 2 — medically complex patients',guidance:'Oral surgery patients skew older and more medically complex. Interface with medicine, anaesthetics, haematology. Name any gaps and say how you\'ll address them during training.',prompt:'',isExp:false},
+    {label:'Challenge 3 — building a referral network',guidance:'Whether public or private, you\'ll need referring dentists to trust you. Professional reputation-building takes time and is relationship-dependent.',prompt:'',isExp:false},
+    {label:'Optional — career trajectory context',guidance:'As an international graduate, navigating professional identity and credibility in a specialty where most are locally trained is a real challenge. Raise this only if you can speak to it confidently.',prompt:'Has this been a factor in your career so far? How have you navigated it?',isExp:true},
+  ]},
+  {id:'q17',model:`Three questions, if that's appropriate.
+
+First: how is operative exposure structured across the year — is there a deliberate progression from foundational dentoalveolar procedures to more complex cases, and how are decisions made about when a trainee is ready to advance?
+
+Second: the program requires a research project each semester. I'm interested in [YOUR RESEARCH INTEREST] — I'd like to understand how students typically identify their project and supervisor, and whether there are active departmental research directions that students can contribute to.
+
+Third: for students who complete the GradDip and wish to progress to the Doctor of Clinical Dentistry in Oral Surgery, what does that transition process look like, and is continuity of supervisor relationship typical?`,category:'CLOSING',question:'Do you have any questions for us?',trap:'TRAP: "No, I think you\'ve covered everything" is a failing answer. Not having questions signals disengagement or inadequate preparation. Prepare at least two.',steps:[
+    {label:'Question about training structure',guidance:'e.g. "How is surgical case load structured across the year, and what does progression look like from foundational to more complex procedures?"',prompt:'',isExp:false},
+    {label:'Question about the research project',guidance:'e.g. "How do students typically identify their research project topic — is there a list of available supervisors and projects, or do students propose their own question?"',prompt:'',isExp:false},
+    {label:'Question about the DClinDent pathway',guidance:'e.g. "For students who wish to progress to the Doctor of Clinical Dentistry after the diploma year, what does that transition process look like?"',prompt:'',isExp:false},
+    {label:'What NOT to ask',guidance:'Leave salary, hours, and on-call burden out. Don\'t ask anything already on the course page — it signals you didn\'t read the program information.',prompt:'',isExp:false},
+  ]},
+];
+
+const MATRICES = {
+  q01:{tests:"Whether audit drove real change, not box-ticking \u2014 and links to surgical safety metrics.",crit:[["Names audits with purpose","lists names only","names + what each measures","precise, incl. surgical metrics"],["Her specific role","vague 'involved'","states role clearly","concrete role + example"],["Closed the loop (change)","no change mentioned","a change named","specific practice change from a finding"],["Surgical extension","generic","mentions surgical relevance","SSI/complication/consent metrics named"]],red:"Audit described as data collection with no resulting change; can't state her own role.",dist:"A concrete change that came from an audit finding, extended to surgical safety metrics."},
+  q02:{tests:"Correct definition + lived participation + patient as a governance partner, in a surgical frame.",crit:[["Definition accuracy","vague","correct definition","crisp, in own words"],["Pillars she's participated in","abstract","names pillars","links to real Westmead/Kings activity"],["Patient's role","omitted/thin","one role named","consent-as-governance + feedback + safety partner"],["Surgical link","generic","mentions consent","irreversible-procedure consent as a governance issue"]],red:"Governance treated as bureaucracy; no patient role articulated.",dist:"Frames consent for irreversible surgery as a governance issue with clinical consequences."},
+  q03:{tests:"Three-pillar definition + a real practice change + intent to contribute.",crit:[["Three pillars","'looking things up'","names all three","integrates them correctly"],["Worked example","none","a generic one","specific clinical question -> change"],["Evidence limitations","absent","acknowledges hierarchy","notes thin RCT base in oral surgery"],["Contributor stance","consumer only","wants to contribute","ties to GradDip project"]],red:"EBP equated to 'using research'; the patient-values pillar is missing.",dist:"A specific case where evidence changed her management, plus a research intent."},
+  q04:{tests:"All three phases, structured pre-op assessment, closed-loop follow-up.",crit:[["Three phases distinct","collapses them","names all three","distinct goals for each"],["Pre-op structure","thin","ASA/meds/imaging/consent","+ anaesthetic triage decision"],["Intra-op judgment","absent","monitoring/team","adapts mid-procedure (real example)"],["Post-op systems","'hand a sheet'","instructions + review","closed-loop follow-up + escalation"]],red:"Peri-op described as the procedure only; no pre/post structure.",dist:"Closes the loop \u2014 flags non-attenders, names the escalation pathway, uses teach-back."},
+  q05:{tests:"Operative volume named first, dual settings, Mysore as an asset not a footnote.",crit:[["Operative volume/breadth","vague","some numbers","conservative numbers, simple vs surgical"],["Westmead complexity","generic","mentions hospital","medically complex/referral mix owned"],["Private contrast","omitted","mentions Kings","independent decision-making named"],["Mysore/ADC as asset","apologetic/footnote","mentioned","pathology-volume advantage owned"]],red:"Leads with soft skills; operative experience buried or absent; Mysore framed as a gap.",dist:"Surgical case numbers up front + Mysore pathology exposure owned as a differentiator."},
+  q06:{tests:"CPD pointed at surgery, with learning -> practice change, plus forward intent.",crit:[["Intent not titles","recites courses","learning stated","learning -> practice change"],["Surgery-specific CPD","general only","some named","sedation/surgical/trauma named"],["Self-directed learning","none","reading mentioned","specific journals/texts (e.g. BJOMS)"],["Forward-looking","none","vague plan","booked/in-progress surgical CPD"]],red:"A CPD list with no learning attached and no surgical direction.",dist:"A clear surgical CPD trajectory already underway."},
+  q07:{tests:"Knowledge of the mandatory-notification threshold + proportionate judgment.",crit:[["Threshold knowledge","any recreational use = notifiable","knows intoxication-while-practising is notifiable","precise line: off-duty use alone not notifiable; trigger = intoxicated practising (incl. on call) or impairment w/ substantial risk"],["Proportionate response","reflexive report OR nothing","facts + supportive conversation","graduated ladder + clear escalation criteria"],["Patient-safety priority","loyalty over safety when threshold met","safety first when risk is clear","names both failure modes"],["'Reasonable belief'","acts on rumour","needs evidence","defines it (direct knowledge, objective test)"]],red:"'Report immediately' for off-duty use (over-report); 'quiet word, leave it' after witnessing practising-intoxicated (under-report); acting on gossip.",dist:"Precise threshold + proportionality + the 'both errors harm someone' close."},
+  q08:{tests:"Real specialty challenges + self-aware mitigation, not soft challenges.",crit:[["Avoids soft challenges","time mgmt/balance","one real challenge","multiple real, specialty-specific"],["Independent practice","not raised","acknowledged","threshold-for-help + network plan"],["Medically complex patients","absent","mentioned","interface plan (med/anaes/haem)"],["Self-aware tone","defensive","honest","uncertainty owned as a strength"]],red:"Soft, generic challenges; or denies having any.",dist:"Names the supervised -> independent transition and how she's preparing for it."},
+  q09:{tests:"Genuine, specific, surgically-foregrounded motivation vs. generic enthusiasm.",crit:[["Surgery foregrounded","'demanding hospital dentistry'","surgery named mid-answer","operating named as the draw in the first 1-2 sentences"],["Specificity","'always loved it'/cliches","one real example","extraction-clinic emotional core + a vivid moment"],["Operative credentials surfaced","not unless asked","extractions mentioned","surgical extractions, teaching, MOS, on-call unprompted"],["Pathway awareness","GradDip as endpoint","wants to specialise","explicit 'Step 1 toward the DClinDent', research included"]],red:"'I like working with my hands / immediate results' as the whole answer; mentor-led opening; surgery never distinguished from general dentistry.",dist:"Extraction-clinic line + operating-as-thesis + pathway commitment, in her warm voice."},
+  q10:{tests:"Evidence-based strengths + a real, non-disqualifying weakness with a plan.",crit:[["Strengths specific+evidenced","adjectives only","named + example","linked to surgery"],["Weakness is real","'perfectionist'","a real one","specific, with evidence"],["Mitigation","none","vague","concrete action underway"],["Calibration","disqualifying or trivial","acceptable","well-judged (not core surgical safety)"]],red:"'Perfectionist' / fake weakness; or a weakness in managing surgical complications.",dist:"A genuine weakness, owned with evidence and a concrete improvement plan."},
+  q11:{tests:"Honest level + one focused interest + audit-vs-research distinction + readiness.",crit:[["Honest about level","overstates","accurate","accurate + what counts (audit/case)"],["Focused interest","'oral surgery research'","an area","a specific question"],["GradDip readiness","unaware","aware","approaches as opportunity; supervisor question ready"],["Audit vs research","conflates","distinguishes","crisp distinction"]],red:"Implies publications she doesn't have; conflates audit with research.",dist:"A specific researchable question tied to her clinical experience."},
+  q12:{tests:"Population definition + Australian data + surgical-vantage framing + conceded tension.",crit:[["Definition","textbook recite","correct","reasoned, in own words"],["Australian data","none","one figure","NHMRC/AIHW figures used accurately"],["Surgical vantage","generalist","mentions hospital","downstream-of-prevention framing"],["Nuance/tension","one-directional","some","concedes + resolves complexity"]],red:"Pure anecdote, no data; generalist 'I treat / I observe' framing only.",dist:"Opens from the surgeon's downstream vantage with real figures and conceded tension."},
+  q13:{tests:"Clinical honesty \u2014 recognised, managed, learned \u2014 not surgical perfection.",crit:[["Real complications","none/trivial","one real","three real, owned"],["Recognition","missed","recognised","early recognition emphasised"],["Management","unclear","correct","correct + escalation/disclosure"],["Learning","none","stated","specific practice change for each"]],red:"Claims no complications, or only trivial ones; no learning.",dist:"Honest, escalation-aware account with a concrete change from each."},
+  q14:{tests:"Real teaching (especially operative) + a genuine teaching challenge.",crit:[["Teaching contexts","vague","named","operative/chairside teaching named"],["Teaching as mastery","not linked","mentioned","'can't teach what you don't understand'"],["The challenge","generic","one real","calibrating honest feedback"],["Surgical relevance","absent","some","extraction-clinic teaching foregrounded"]],red:"Teaching described as ambient culture, not something she does.",dist:"Her extraction-clinic teaching framed as evidence of operative mastery."},
+  q15:{tests:"Leadership at the chair + a real example + a calibrated style.",crit:[["Chair-side leadership","committee-only view","mentions team","directing the team in real time"],["Style","undefined","stated","collaborative-but-directive, calibrated"],["Real example","none","generic","a specific lead moment"],["Surgical frame","generic","some","theatre/team coordination named"]],red:"Leadership = titles/committees only; no clinical leadership.",dist:"Locates leadership in real-time operative team direction, with an example."},
+  q16:{tests:"Doesn't avoid conflict; resolves it constructively; knows the escalation line.",crit:[["Doesn't claim to avoid it","'I avoid conflict'","acknowledges it","normalises it credibly"],["Approach","vague","constructive","specific, de-escalating method"],["Real example","none","generic","a specific resolved conflict"],["Escalation line","absent","mentioned","patient-safety/conduct overrides comfort"]],red:"'I always find common ground' / claims never to have conflict.",dist:"Knows when informal resolution stops and formal escalation becomes obligatory."},
+  q17:{tests:"Engaged, researched questions \u2014 not 'you've covered everything'.",crit:[["Has real questions","none","one","2-3 substantive"],["Training-structure Q","absent","generic","operative-progression specific"],["Research/pathway Q","absent","one","DClinDent transition asked"],["Avoids poor asks","salary/hours","neutral","nothing answerable from the website"]],red:"'No, you've covered everything.'",dist:"Questions that signal she's mapped the pathway beyond the diploma."},
+  q18:{tests:"Concrete reasons for THIS program and Sydney, not generic praise.",crit:[["Program specifics","generic","one specific","progression + research + pathway"],["Sydney specifics","generic","one reason","Westmead tie + case mix + faculty"],["Personal fit","absent","stated","tied to her current role/trajectory"],["Avoids cliches","'world-class'","mostly","nothing generic"]],red:"'Strong reputation / world-class' offered as the substance.",dist:"Reasons only she could give, anchored in her Westmead work."},
+  q19:{tests:"A positive, deliberate scope choice; respect for OMFS.",crit:[["Positive framing","'couldn't do medicine'","neutral","deliberate scope choice"],["Foundation link","absent","mentioned","dentoalveolar base named"],["Respects OMFS","dismissive","neutral","respectful distinction"],["Self-fit","vague","stated","clear why this route suits her"]],red:"Disparages OMFS, or frames surgical dentistry as a consolation prize.",dist:"A confident, positive account of choosing this scope and pathway."},
+  q20:{tests:"Resilience + commitment, with a concrete improvement plan.",crit:[["Resilient tone","devastated/indifferent","composed","determined, not crushed"],["Concrete plan","none","vague","specific gap + action"],["Continued experience","absent","mentioned","keeps building operatively"],["Reaffirms commitment","weak","stated","clearly this is the direction"]],red:"No plan B, or 'I wouldn't really mind'.",dist:"A specific plan to strengthen the exact gap, with commitment intact."},
+  q21:{tests:"Structured assessment -> technique -> follow-up + honest operative level.",crit:[["Assessment/imaging","thin","OPG + risk signs","+ classification + CBCT indications"],["Consent/risk","omitted","some risks","IAN/lingual/dry socket/fracture"],["Technique sequence","vague","rough","flap/bone/section/deliver/close"],["Honest own level","overstates","states","accurate vs supervisor"]],red:"Overstates independent complexity; misses IAN considerations.",dist:"A clean stepwise account with honest framing of her supervised level."},
+  q22:{tests:"Judgment \u2014 retrieve vs leave; avoids reflexive retrieval.",crit:[["Stops/reassesses","chases blindly","pauses","radiograph + reassess"],["Decision framework","retrieve at all costs","considers leaving","size/depth/IAN criteria"],["Consent/document","omitted","mentioned","informed consent + documentation"],["Escalation","absent","mentioned","refer if beyond comfort"]],red:"'Retrieve it whatever it takes' near the IAN.",dist:"Weighs retrieval risk against leaving a deep, asymptomatic fragment."},
+  q23:{tests:"Consent as a process; material risks + alternatives; comprehension.",crit:[["Process not signature","signature only","mentions discussion","at consult, not pre-op"],["Material risks + alternatives","thin","some","procedure-specific + no-treatment option"],["Comprehension check","none","mentioned","teach-back"],["Governance link","absent","some","irreversible-procedure framing"]],red:"Consent = getting the form signed.",dist:"Teach-back and documentation framed as patient-safety governance."},
+  q24:{tests:"Scope-recognition as judgment; a non-trivial real case.",crit:[["Real, non-trivial case","trivial","a case","the parotid/non-odontogenic referral"],["Recognition basis","unclear","stated","specific features that flagged it"],["Escalation","absent","referred","referred + worked alongside"],["Framing","as weakness","neutral","as a surgical skill"]],red:"Picks a trivially easy case; frames scope limits as a failure.",dist:"Frames knowing the limit as a core surgical competency."},
+  q25:{tests:"Systematic, evidence-based, collaborative across the three groups.",crit:[["Anticoagulants","reflexively stop","local measures","continue + INR + risk balance"],["MRONJ/antiresorptives","absent","mentioned","risk assessment + her screening"],["Diabetes/healing","omitted","mentioned","control + infection/healing"],["Physician liaison","absent","mentioned","when/how she liaises"]],red:"Reflexively stops anticoagulants; no MRONJ awareness.",dist:"Evidence-based, drawing on her own MRONJ screening experience."},
+  q26:{tests:"A calm local -> systemic -> escalation ladder; airway awareness.",crit:[["Local measures order","scattered","some","pressure -> LA -> agent -> suture -> TXA"],["Systemic cause","ignored","mentioned","meds/coagulopathy considered"],["Escalation","absent","mentioned","medicine/haematology + airway"],["Own experience","none","mentioned","a real on-call bleed"]],red:"No ordered approach; misses systemic causes/airway.",dist:"A confident ladder grounded in her on-call experience."},
+  q27:{tests:"Patient safety over hierarchy + respectful communication + a safe alternative.",crit:[["Safety over hierarchy","'just do it'","hesitant","clear safety priority"],["Communication","flat refusal","states limit","specific, respectful"],["Safe alternative","none","escalate","supervision/learning offer"],["Documentation","absent","mentioned","documents"]],red:"'I'd do it because they're senior'; or flat refusal with no communication.",dist:"Turns it into supervised learning while protecting the patient."},
+  q28:{tests:"Autonomy vs obligation; explores the cause; may decline.",crit:[["Explore the why","ignores","asks","cost/fear/experience explored"],["Inform + alternatives","none","informs","consequences + restorative options"],["Respect autonomy","overrides","acknowledges","shared decision"],["May decline non-indicated","unaware","mentioned","can decline + document"]],red:"Either just extracts on demand, or refuses without exploring/explaining.",dist:"Explores the cause, informs, respects autonomy, declines harm."},
+  q29:{tests:"Open disclosure, unconditionally.",crit:[["Discloses","conceals","discloses","unconditional open disclosure"],["Disclosure quality","thin","apology","explanation + apology + remediation + report"],["Documentation/governance","absent","mentioned","incident report"],["Rationale","weak","duty","honesty as obligation; concealment as the real risk"]],red:"'If they didn't notice, no harm done.'",dist:"Frames concealment as the true risk \u2014 to patient, trust, and registration."},
+  q30:{tests:"Actively seeks feedback; a real change; coachability.",crit:[["Seeks it","tolerates","open","actively seeks"],["Real example","none","generic","specific change from feedback"],["Acts on it","passive","sometimes","concrete change shown"],["Surgical-training fit","absent","mentioned","ready for feedback-dense training"]],red:"Defensive, or no example of acting on feedback.",dist:"A concrete instance of changing practice after feedback."},
+  q31:{tests:"Specific strategies + fatigue as a safety issue + support.",crit:[["Acknowledges + specific","denies/generic","some","specific, personal strategies"],["Fatigue as safety","absent","mentioned","escalate/hand over when impaired"],["Support network","none","mentioned","peer/supervisor support"],["Self-awareness","thin","present","mature, honest"]],red:"'I never get stressed'; or only generic self-care.",dist:"Treats fatigue as a patient-safety threshold, not just a personal matter."},
+  q32:{tests:"A genuine failure + response + concrete learning.",crit:[["Genuine failure","disguised non-failure","real","real and owned"],["In-the-moment response","absent","stated","handled well"],["Learning","none","stated","specific change"],["Maturity","defensive","honest","insightful, not self-flagellating"]],red:"'I work too hard' non-failure; or a failure with no learning.",dist:"A real failure, owned, with a concrete change that followed."},
+  q33:{tests:"Specific sources + appraisal + contributor link.",crit:[["Specific sources","none","one","BJOMS/IJOMS/Cochrane/guidelines"],["Appraisal","reads only","mentions","weighs quality/applicability"],["Habit","vague","stated","a real regular habit"],["Contributor link","absent","mentioned","GradDip project tie"]],red:"Can't name a single specific source.",dist:"Names real sources and appraises rather than just consumes."},
+  q34:{tests:"Rapport + plain language + control + a real example.",crit:[["Acknowledge fear","dismisses","mentions","names and validates"],["Plain language","jargon","mostly","clear, paced"],["Gives control","absent","mentioned","pause-signal / what-to-expect"],["Real example","none","generic","a specific anxious patient"]],red:"Dismisses anxiety, or relies only on jargon/reassurance.",dist:"Concrete techniques shown through a real patient she guided."},
+  q35:{tests:"Interface awareness + contributor/communicator + a real example.",crit:[["MDT placement","unclear","mentions","dentistry-medicine-surgery interface"],["Contributor role","passive","stated","clear handover/scope"],["Communication","thin","mentioned","knows when to defer"],["Real example","none","generic","a Westmead MDT case"]],red:"Describes the MDT abstractly with no role for herself.",dist:"A real MDT case showing her specific contribution and limits."},
+  q36:{tests:"Forward-looking judgment about her stage \u2014 not damage control or apology.",crit:[["Forward framing","apologetic/fallback","neutral","deliberate right entry point"],["Self-aware about stage","overstates readiness","acknowledges the step","names the foundation she's building"],["Pathway clarity","GradDip as endpoint","wants the doctorate","explicit deliberate sequence to DClinDent + registration"],["Composure","flustered/defensive","calm","owns it as a confident choice"]],red:"Frames it as a fallback or a fix for a mistake, or volunteers the application mix-up.",dist:"'The sequence I'd choose even if both doors were open' \u2014 confident, forward, no apology."},
+  q37:{tests:"Composure under a direct probe; converts a fumble into judgment without volunteering it.",crit:[["One clean sentence","rambling/defensive","adequate","crisp, calm, no apology"],["Reframe as judgment","admits carelessness","neutral","clarified-readiness framing"],["Pivot forward","dwells on it","moves on","returns to why the GradDip fits"],["No unprompted disclosure","volunteers the error","-","addresses only if asked"]],red:"Says 'I applied to the wrong program', sounds flustered, or volunteers it unprompted.",dist:"A calm one-liner that turns the clarification into evidence of good self-judgment."},
+  q38:{tests:"Overseas training owned as a complementary asset, with active bridging \u2014 not defensiveness.",crit:[["Asset framing","apologetic","neutral","distinct pathology/resilience asset owned"],["Specifics","generic","one example","advanced pathology / late presentations / oral cancer"],["Bridging the difference","denies gaps","mentions","active bridging via Westmead/CPD"],["Tone","defensive or disparaging","even","confident, complementary"]],red:"Apologetic about overseas training, or disparages Australian training to compensate.",dist:"Frames the Mysore/ADC pathway as exposure Australian graduates often lack, plus deliberate bridging."},
+  q39:{tests:"An honest, specific scope ceiling \u2014 over-claiming is the failure.",crit:[["Honesty","overstates","hedges","names the real ceiling"],["Specificity","vague","one limit","specific procedures/cases she'd refer"],["Scope as skill","as weakness","neutral","knowing the limit framed as judgment"],["Forward","dead-end","mentions","this is what the training is for"]],red:"Over-claims independent capability beyond her supervised level.",dist:"A specific, unembarrassed account of the ceiling, framed as a surgical strength."},
+  q40:{tests:"Non-defensive, governance-minded handling \u2014 a complaint as quality data.",crit:[["Non-defensive","takes it personally","listens","listens + acknowledges genuinely"],["Process","none","investigates","factual review + remediation + documentation"],["Governance link","absent","mentioned","complaint as quality data; escalation pathway"],["Learning","none","stated","what changes as a result"]],red:"Defensive, dismissive, or treats the complaint as a personal attack.",dist:"Treats the complaint as quality data and closes the loop with a change."},
+  q41:{tests:"Correct capacity framework \u2014 decision-specific, best-interests, NSW process.",crit:[["Capacity presumed/assessed","assumes incapacity","mentions assessment","decision-specific, presumed unless assessed"],["If lacking","proceeds anyway","best interests","substitute decision-maker/guardian per NSW"],["Emergency/least-restrictive","absent","mentioned","necessity in emergency; least-restrictive option"],["Documentation","none","mentioned","documents capacity + decision basis"]],red:"Proceeds with elective surgery on an incapacitated patient without proper process.",dist:"Decision-specific capacity + the correct NSW substitute-consent pathway."},
+  q42:{tests:"Structured BLS/escalation + knowledge of common chair emergencies.",crit:[["Structured approach","panic/vague","some steps","DRSABCD + call for help early"],["Common emergencies","none named","one","vasovagal/hypoglycaemia/anaphylaxis/angina/seizure"],["Emergency management","unclear","basic","oxygen + correct drug (e.g. adrenaline for anaphylaxis)"],["Currency/experience","absent","mentioned","current BLS/ALS + on-call experience"]],red:"No structured approach; can't name management of common chair emergencies.",dist:"Calm DRSABCD with correct anaphylaxis/hypoglycaemia management and current certification."},
+  q43:{tests:"Crisp, confident differentiators \u2014 not modesty or hedging.",crit:[["Confidence","hedges/deflects","adequate","owns it without arrogance"],["Differentiators","generic","one","2-3 specific (operative + overseas + commitment)"],["Specificity","vague","some","concrete claims she can defend"],["Brevity","rambles","ok","tight and punchy"]],red:"Modest deflection, or generic claims any applicant could make.",dist:"Three specific, defensible differentiators delivered with calm confidence."},
+  q44:{tests:"Specific, credible attributes ideally tied to real feedback, plus a growth area.",crit:[["Specific attributes","generic praise","some","2-3 concrete, credible"],["Tied to real feedback","invented","plausible","actual supervisor observations"],["Growth area","none/fake","one","genuine, consistent with strengths/weaknesses"],["Credibility","inflated","even","believable, grounded"]],red:"Generic 'hardworking and reliable' with nothing specific or real.",dist:"Real attributes a supervisor has noted, plus an honest growth edge."},
+};
+
+const PHASES = [
+  {id:'phase1',label:'Phase 1',title:'Content lock-in',subtitle:'19–22 June · Fri–Mon · Fill every framework gap',color:'teal',days:[
+    {n:1,label:'DAY 1 · FRI',date:'19 June',tasks:['Open the framework — complete YOUR EXPERIENCE fields for audits, governance, EBP','Write raw notes only — don\'t polish yet','Compile your CPD list for the last 2 years']},
+    {n:2,label:'DAY 2 · SAT',date:'20 June',tasks:['Complete: peri-op care, experience fields','Compile accurate case volume numbers — Westmead and Kings Family','Draft your research interest in one paragraph']},
+    {n:3,label:'DAY 3 · SUN',date:'21 June',tasks:['Complete: 3 complications in SBAR format on paper — hardest content day','Complete: public health examples and your Westmead connection','Draft your "why oral surgery" story']},
+    {n:4,label:'DAY 4 · MON',date:'22 June',tasks:['Complete: strengths/weaknesses, conflict example, leadership example','Review all framework fields — flag any still empty','Phase 1 complete: every field has content']},
+  ]},
+  {id:'phase2',label:'Phase 2',title:'Answer construction',subtitle:'23–25 June · Tue–Thu · Build timed spoken answers',color:'violet',days:[
+    {n:5,label:'DAY 5 · TUE',date:'23 June',tasks:['Build 5 spoken answers: audits, governance, EBP, peri-op care, experience','Time yourself: aim for 2–3 minutes per answer','Record on phone — listen back for filler words and pace']},
+    {n:6,label:'DAY 6 · WED',date:'24 June',tasks:['Build 5 answers: CPD, why oral surgery, strengths/weaknesses, complications, public health','Focus on opening line — it must not be generic','Identify which 3 answers feel weakest']},
+    {n:7,label:'DAY 7 · THU',date:'25 June',tasks:['Build remaining: drugs colleague, conflict, leadership, teaching, research, questions to ask','Drugs and conflict must be spoken — easy to stumble on live','All 17 questions now have a spoken answer']},
+  ]},
+  {id:'phase3',label:'Phase 3',title:'Performance rehearsal',subtitle:'26–30 June · Fri–Tue · Simulate the room',color:'amber',days:[
+    {n:8,label:'DAY 8 · FRI',date:'26 June',tasks:['Mock interview #1 — solo','Sit at a desk, dress professionally, record video','Review: posture, pace, filler words, opening lines']},
+    {n:9,label:'DAY 9 · SAT',date:'27 June',highlight:true,tasks:['Mock interview #2 — with another person as interviewer','They ask questions cold — you respond cold, no notes','Debrief immediately: what landed, what didn\'t']},
+    {n:10,label:'DAY 10 · SUN',date:'28 June',tasks:['Target the 3 weakest answers — rebuild from scratch if needed','Practice trap questions specifically: drugs, complications, weakness','Refine your career trajectory answer for the DClinDent question']},
+    {n:11,label:'DAY 11 · MON',date:'29 June',highlight:true,tasks:['Mock interview #3 — full simulation, timer on, formal setting','Different person as interviewer if possible','No stopping, no do-overs — treat it as the real thing']},
+    {n:12,label:'DAY 12 · TUE',date:'30 June',tasks:['Light review only — no new material','Re-read key frameworks for 3 hardest questions','Prepare logistics: outfit, route, timing, documents required']},
+  ]},
+  {id:'phase4',label:'Phase 4',title:'Reset day',subtitle:'1 July · Wed · Stop preparing. Start resting.',color:'slate',days:[
+    {n:13,label:'DAY 13 · WED',date:'1 July',tasks:['No new content. No practice sessions.','Read back through your one-sentence daily notes','Physical activity, eat well, sleep before midnight','Lay out everything for the morning — nothing left to find']},
+    {n:14,label:'INTERVIEW DAY',date:'2 July',isInterview:true,tasks:['Arrive 20 minutes early','Pause before answering — signals thinking, not uncertainty','First sentence of each answer matters most','Ask your two prepared questions at the close']},
+  ]},
+];
+
+const DAILY = [
+  {time:'0–15 min',title:'Warm-up',desc:'Speak yesterday\'s best answer from memory — no notes. Forces retrieval, reveals what\'s actually retained vs. just recognised.'},
+  {time:'15–60 min',title:'Main work',desc:'Fill content fields, build answers, or run a mock interview depending on the phase. Do not read passively. Write, speak, or structure.'},
+  {time:'60–80 min',title:'Target weakness',desc:'Speak your weakest answer of the day again from scratch. Weakness doesn\'t improve by avoiding it.'},
+  {time:'80–90 min',title:'Close',desc:'Write one sentence: what you consolidated today and one gap remaining. This becomes your Day 13 review material.'},
+];
+
+const NON_NEG = [
+  'Speak one answer out loud every single day — not in your head, not on paper.',
+  'Cap active prep at 90 minutes. Fatigue past that produces anxiety, not improvement.',
+  'End each session with one sentence: what you consolidated, one gap remaining.',
+];
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+
+function ls(key, def) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch { return def; }
+}
+function lsSet(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+}
+
+const state = {
+  view: 'questions',
+  activeCategory: 'ALL',
+  scoreCategory: 'ALL',
+  originFilter: 'ALL',
+  openQuestions: {},
+  openPhases: { phase1: true },
+  openModels: {},
+  notes: ls('sh-notes', {}),
+  checked: ls('sh-checked', {}),
+  daysDone: ls('sh-days', {}),
+  openMatrix: {},
+  marks: ls('sh-marks', {}),
+  markDraft: ls('sh-markdraft', {}),
+};
+
+// ── RENDER ───────────────────────────────────────────────────────────────────
+
+function exportAnswers() {
+  const now = new Date().toLocaleDateString('en-AU', {day:'2-digit',month:'long',year:'numeric'});
+  const prog = getTotalProgress();
+
+  const colorMap = {
+    teal:'#1e4d3e', violet:'#1e1a40', amber:'#3d2810', rose:'#3d1515', slate:'#1a1f30'
+  };
+  const textMap = {
+    teal:'#6ecfb0', violet:'#a090f0', amber:'#e8a85e', rose:'#e07070', slate:'#8090b8'
+  };
+
+  let sections = '';
+  QUESTIONS.forEach((q, qi) => {
+    const cat = CATEGORIES[q.category];
+    const color = cat.color;
+    const bg = colorMap[color] || '#1e2330';
+    const tc = textMap[color] || '#9ba3b8';
+
+    let stepsHtml = '';
+    if (q.trap) {
+      stepsHtml += `<div style="background:#3d1515;border:1px solid #b04a4a;border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#e07070;line-height:1.6;"><strong>⚠ ${q.trap}</strong></div>`;
+    }
+
+    q.steps.forEach((step, si) => {
+      const note = (state.notes[q.id+'-'+si] || '').trim();
+      const checked = state.checked[q.id+'-'+si];
+      stepsHtml += `<div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #2d3345;">`;
+      stepsHtml += `<div style="font-size:12px;font-weight:600;color:#c8c0b0;margin-bottom:4px;">${step.label}${step.isExp ? ` <span style="font-size:10px;background:${bg};color:${tc};border-radius:99px;padding:2px 7px;font-weight:500;margin-left:4px;">your experience</span>` : ''}</div>`;
+      stepsHtml += `<div style="font-size:12px;color:#7a8498;line-height:1.6;margin-bottom:6px;">${step.guidance}</div>`;
+      if (step.isExp) {
+        if (note) {
+          stepsHtml += `<div style="background:#1e2330;border-left:3px solid ${tc};border-radius:0 4px 4px 0;padding:10px 12px;font-size:13px;color:#d8d0c0;line-height:1.7;white-space:pre-wrap;">${note.replace(/</g,'&lt;').replace(/>/g,'&gt;')}${checked ? ' <span style="color:#6ecfb0;font-size:11px;">✓</span>' : ''}</div>`;
+        } else {
+          stepsHtml += `<div style="background:#181c25;border:1px dashed #2d3345;border-radius:4px;padding:8px 12px;font-size:12px;color:#3a4158;font-style:italic;">No notes entered yet</div>`;
+        }
+      }
+      stepsHtml += `</div>`;
+    });
+
+    sections += `
+      <div style="background:#181c25;border:1px solid #2d3345;border-radius:10px;margin-bottom:20px;overflow:hidden;page-break-inside:avoid;">
+        <div style="background:${bg};padding:14px 18px;display:flex;align-items:center;gap:12px;">
+          <div style="background:${bg};border:1px solid ${tc};border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;color:${tc};font-weight:600;">${String(qi+1).padStart(2,'0')}</div>
+          <div>
+            <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:${tc};margin-bottom:2px;">${cat.label}</div>
+            <div style="font-size:14px;font-weight:600;color:#e8e4d8;line-height:1.4;">${q.question}</div>
+          </div>
+        </div>
+        <div style="padding:16px 18px 4px;">${stepsHtml}</div>
+      </div>`;
+  });
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Shimsha — Interview Answers</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0d0f14;color:#e8e4d8;font-family:-apple-system,'Inter',sans-serif;padding:40px 32px;max-width:820px;margin:0 auto;}
+  @media print{
+    body{background:#fff;color:#111;padding:20px;}
+    .no-print{display:none}
+    div[style*="background:#181c25"]{background:#f8f8f8!important;border-color:#ddd!important;}
+    div[style*="background:#1e2330"]{background:#f0f0f0!important;}
+    div[style*="background:#3d1515"]{background:#fff3f3!important;}
+    div[style*="color:#e8e4d8"]{color:#111!important;}
+    div[style*="color:#7a8498"]{color:#444!important;}
+    div[style*="color:#c8c0b0"]{color:#222!important;}
+    div[style*="color:#d8d0c0"]{color:#111!important;}
+    div[style*="color:#3a4158"]{color:#999!important;}
+  }
+</style>
+</head>
+<body>
+  <div style="margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid #2d3345;">
+    <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5c6478;margin-bottom:6px;">University of Sydney · GradDip Clinical Dentistry (Surgical Dentistry)</div>
+    <div style="font-size:26px;font-weight:600;color:#e8e4d8;margin-bottom:8px;">Interview Preparation Notes</div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;">
+      <span style="font-size:13px;color:#9ba3b8;">Shimsha</span>
+      <span style="font-size:13px;color:#9ba3b8;">Interview: 2 July 2026</span>
+      <span style="font-size:13px;color:#9ba3b8;">Exported: ${now}</span>
+      <span style="font-size:13px;color:#6ecfb0;">${prog}% complete</span>
+    </div>
+  </div>
+
+  <div class="no-print" style="background:#1e4d3e;border:1px solid #3d9e82;border-radius:8px;padding:14px 18px;margin-bottom:28px;font-size:13px;color:#6ecfb0;line-height:1.6;">
+    <strong>To save as PDF:</strong> Press <strong>Ctrl+P</strong> (Windows) or <strong>Cmd+P</strong> (Mac) → Change destination to <strong>"Save as PDF"</strong> → Save.
+  </div>
+
+  ${sections}
+</body>
+</html>`;
+
+  const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url, '_blank');
+  if (!win) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'shimsha-interview-answers-' + new Date().toISOString().slice(0,10) + '.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
+}
+
+function getDaysRemaining() {
+  const interview = new Date('2026-07-02');
+  const today = new Date(); today.setHours(0,0,0,0);
+  return Math.max(0, Math.ceil((interview - today) / 86400000));
+}
+
+function getTotalProgress() {
+  let total = 0, done = 0;
+  QUESTIONS.forEach(q => q.steps.forEach((s,i) => {
+    if (s.isExp) { total++; if (state.checked[`${q.id}-${i}`]) done++; }
+  }));
+  return total === 0 ? 0 : Math.round(done / total * 100);
+}
+
+function el(tag, cls, attrs) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (attrs) Object.entries(attrs).forEach(([k,v]) => { if (k === 'text') e.textContent = v; else if (k === 'html') e.innerHTML = v; else e.setAttribute(k,v); });
+  return e;
+}
+
+function renderHeader() {
+  const prog = getTotalProgress();
+  const days = getDaysRemaining();
+  const h = el('header','header');
+  h.innerHTML = `
+    <div class="header-inner">
+      <div>
+        <div class="eyebrow">University of Sydney · GradDip Surgical Dentistry</div>
+        <div class="h-title">Interview Preparation</div>
+        <div class="meta">
+          <span class="meta-item"><span class="meta-dot" style="background:var(--teal)"></span>Shimsha</span>
+          <span class="meta-item"><span class="meta-dot" style="background:var(--amber)"></span>Interview: 2 July</span>
+          <span class="meta-item"><span class="meta-dot" style="background:${days<=3?'var(--rose)':'var(--violet)'}"></span>${days} days remaining</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap">
+        <nav class="nav">
+          <button class="nav-btn ${state.view==='questions'?'active':''}" data-view="questions">Questions</button>
+          <button class="nav-btn ${state.view==='timetable'?'active':''}" data-view="timetable">Timetable</button>
+          <button class="nav-btn ${state.view==='scoring'?'active':''}" data-view="scoring">Scoring</button>
+        </nav>
+        <button class="export-btn" id="export-btn">↓ Export answers</button>
+      </div>
+    </div>
+    <div class="prog-bar-wrap">
+      <div class="prog-bar-inner">
+        <div class="prog-label"><span>Answer frameworks completed</span><span>${prog}%</span></div>
+        <div class="prog-track"><div class="prog-fill" style="width:${prog}%"></div></div>
+      </div>
+    </div>`;
+  h.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => { state.view = btn.dataset.view; render(); });
+  });
+  const expBtn = h.querySelector('#export-btn');
+  if (expBtn) expBtn.addEventListener('click', exportAnswers);
+  return h;
+}
+
+function renderOriginToggle(){
+  const wrap = el('div','origin-toggle');
+  const opts = [['ALL','All'],['original','Original'],['added','Added']];
+  opts.forEach(([val,label])=>{
+    const n = val==='ALL' ? QUESTIONS.length
+            : val==='original' ? QUESTIONS.filter(q=>!isAdded(q.id)).length
+            : QUESTIONS.filter(q=>isAdded(q.id)).length;
+    const b = el('button','origin-tog-btn'+(state.originFilter===val?' active':''));
+    b.innerHTML = `${label} <span class="otog-count">${n}</span>`;
+    b.addEventListener('click', ()=>{ state.originFilter = val; render(); });
+    wrap.appendChild(b);
+  });
+  return wrap;
+}
+
+function renderQuestionsView() {
+  const wrap = el('div');
+  wrap.appendChild(renderOriginToggle());
+  // filter bar
+  const allCats = ['ALL', ...Object.keys(CATEGORIES)];
+  const fb = el('div','filter-bar');
+  const fs = el('div','filter-scroll');
+  allCats.forEach(cat => {
+    const label = cat === 'ALL' ? 'All questions' : CATEGORIES[cat].label;
+    const count = cat === 'ALL' ? QUESTIONS.length : QUESTIONS.filter(q=>q.category===cat).length;
+    const btn = el('button', `filter-btn${state.activeCategory===cat?' active':''}` );
+    btn.innerHTML = `${label} <span class="filter-count">${count}</span>`;
+    btn.addEventListener('click', () => { state.activeCategory = cat; render(); });
+    fs.appendChild(btn);
+  });
+  fb.appendChild(fs);
+  wrap.appendChild(fb);
+
+  const hint = el('div','hint');
+  hint.innerHTML = '<span style="color:var(--text-faint)">↓</span> Expand each question to see the answer framework. Fields marked <strong style="color:var(--text-secondary);font-weight:500">your experience</strong> are where the real content goes — tick them off when complete.';
+  wrap.appendChild(hint);
+
+  let filtered = state.activeCategory === 'ALL' ? QUESTIONS : QUESTIONS.filter(q=>q.category===state.activeCategory);
+  if (state.originFilter === 'original') filtered = filtered.filter(q=>!isAdded(q.id));
+  else if (state.originFilter === 'added') filtered = filtered.filter(q=>isAdded(q.id));
+  filtered.forEach((q, idx) => {
+    wrap.appendChild(renderQuestionCard(q, QUESTIONS.indexOf(q) + 1));
+  });
+  return wrap;
+}
+
+
+function mxEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function mxBand(total, max, red){
+  if(red) return {label:'Red flag — review', bg:'var(--rose-dim)', tc:'var(--rose-text)'};
+  if(total >= max*0.75) return {label:'Distinctive', bg:'var(--teal-dim)', tc:'var(--teal-text)'};
+  if(total >= max*0.5)  return {label:'Solid', bg:'var(--amber-dim)', tc:'var(--amber-text)'};
+  return {label:'Needs work', bg:'var(--rose-dim)', tc:'var(--rose-text)'};
+}
+function renderMatrixPanel(q, color){
+  const mx = MATRICES[q.id];
+  const body = el('div','matrix-body');
+  if(!state.markDraft[q.id]) state.markDraft[q.id] = {scores:{}, red:false, note:''};
+  const draft = state.markDraft[q.id];
+  const max = mx.crit.length * 3;
+
+  const tests = el('div','mx-tests');
+  tests.innerHTML = '<b style="color:var(--text-secondary);font-weight:600;">What this tests:</b> ' + mxEsc(mx.tests);
+  body.appendChild(tests);
+
+  mx.crit.forEach((c, ci) => {
+    const row = el('div','mx-crit');
+    const nm = el('div','mx-crit-name'); nm.textContent = (ci+1)+'. '+c[0]; row.appendChild(nm);
+    const chips = el('div','mx-chips');
+    [0,1,2,3].forEach(v => {
+      const sel = draft.scores[ci] === v;
+      const chip = el('button','mx-chip s'+v+(sel?' sel':''));
+      chip.textContent = v;
+      chip.addEventListener('click', () => {
+        if(draft.scores[ci] === v) delete draft.scores[ci]; else draft.scores[ci] = v;
+        lsSet('sh-markdraft', state.markDraft); render();
+      });
+      chips.appendChild(chip);
+    });
+    row.appendChild(chips);
+    const leg = el('div','mx-legend');
+    leg.innerHTML = '<b>1</b>'+mxEsc(c[1])+' &nbsp;·&nbsp; <b>2</b>'+mxEsc(c[2])+' &nbsp;·&nbsp; <b>3</b>'+mxEsc(c[3]);
+    row.appendChild(leg);
+    body.appendChild(row);
+  });
+
+  const red = el('div','mx-red');
+  const redTxt = el('div'); redTxt.innerHTML = '<b>Red flag:</b> ' + mxEsc(mx.red);
+  const redBtn = el('button','mx-redflag-btn'+(draft.red?' on':''));
+  redBtn.textContent = draft.red ? '✓ Flagged' : 'Flag it';
+  redBtn.addEventListener('click', () => { draft.red = !draft.red; lsSet('sh-markdraft', state.markDraft); render(); });
+  red.appendChild(redTxt); red.appendChild(redBtn);
+  body.appendChild(red);
+
+  const dist = el('div','mx-dist');
+  dist.innerHTML = '<b>A+ marker:</b> ' + mxEsc(mx.dist);
+  body.appendChild(dist);
+
+  let total = 0; mx.crit.forEach((_,ci)=> total += (draft.scores[ci] || 0));
+  const band = mxBand(total, max, draft.red);
+  const tot = el('div','mx-total');
+  tot.innerHTML = '<div class="mx-total-num">'+total+'<span>/'+max+'</span></div>';
+  const bandEl = el('span','mx-band'); bandEl.textContent = band.label;
+  bandEl.style.background = band.bg; bandEl.style.color = band.tc;
+  tot.appendChild(bandEl);
+  body.appendChild(tot);
+
+  const note = el('textarea','mx-note'); note.setAttribute('rows','2');
+  note.setAttribute('placeholder','Notes on this run — what to fix next time…');
+  note.value = draft.note || '';
+  note.addEventListener('input', () => { draft.note = note.value; lsSet('sh-markdraft', state.markDraft); });
+  body.appendChild(note);
+
+  const save = el('button','mx-save'); save.textContent = 'Save this run';
+  save.addEventListener('click', () => {
+    let t = 0; mx.crit.forEach((_,ci)=> t += (draft.scores[ci] || 0));
+    const arr = mx.crit.map((_,ci)=> draft.scores[ci] != null ? draft.scores[ci] : 0);
+    const run = { date: new Date().toLocaleDateString('en-AU',{day:'2-digit',month:'short'}), scores:arr, red:!!draft.red, note:(draft.note||'').trim(), total:t };
+    if(!state.marks[q.id]) state.marks[q.id] = [];
+    state.marks[q.id].push(run);
+    delete state.markDraft[q.id];
+    lsSet('sh-marks', state.marks); lsSet('sh-markdraft', state.markDraft);
+    render();
+  });
+  body.appendChild(save);
+
+  const runs = state.marks[q.id] || [];
+  const hist = el('div','mx-runs');
+  const ht = el('div','mx-runs-title'); ht.textContent = 'Mock-run history'; hist.appendChild(ht);
+  if(runs.length === 0){
+    const em = el('div','mx-empty'); em.textContent = 'No runs saved yet. Score the four criteria, then Save this run to track her over time.'; hist.appendChild(em);
+  } else {
+    runs.forEach((r, ri) => {
+      const row = el('div','mx-run');
+      const d = el('span','mx-run-date'); d.textContent = r.date; row.appendChild(d);
+      const sc = el('span','mx-run-score'); sc.textContent = r.total+'/'+max; row.appendChild(sc);
+      if(r.red){ const rf = el('span','mx-run-redflag'); rf.textContent = '⚠ flag'; row.appendChild(rf); }
+      const nt = el('span','mx-run-note'); nt.textContent = r.note || ''; row.appendChild(nt);
+      const del = el('button','mx-run-del'); del.textContent = '✕';
+      del.addEventListener('click', () => {
+        state.marks[q.id].splice(ri,1);
+        if(state.marks[q.id].length === 0) delete state.marks[q.id];
+        lsSet('sh-marks', state.marks); render();
+      });
+      row.appendChild(del);
+      hist.appendChild(row);
+    });
+  }
+  body.appendChild(hist);
+
+  return body;
+}
+
+function isAdded(id){ return parseInt(id.replace('q',''),10) > 17; }
+
+function renderQuestionCard(q, num) {
+  const cat = CATEGORIES[q.category];
+  const color = cat.color;
+  const isOpen = state.openQuestions[q.id];
+  const expSteps = q.steps.map((s,i)=>({s,i})).filter(({s})=>s.isExp);
+  const doneExp = expSteps.filter(({s,i})=>state.checked[`${q.id}-${i}`]).length;
+  const totalExp = expSteps.length;
+  const prog = totalExp > 0 ? Math.round(doneExp/totalExp*100) : 0;
+  const isDone = totalExp > 0 && doneExp === totalExp;
+
+  const card = el('div', `q-card${isOpen?' open':''}`);
+
+  // trigger
+  const trigger = el('button','q-trigger');
+  const indexHtml = isDone
+    ? `<div class="q-index done"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`
+    : `<div class="q-index">${String(num).padStart(2,'0')}</div>`;
+
+  let miniHtml = '';
+  if (prog > 0 && !isDone) miniHtml = `<div class="q-mini-prog"><div class="q-mini-track"><div class="q-mini-fill fill-${color}" style="width:${prog}%"></div></div><span class="q-mini-label">${doneExp}/${totalExp} experience fields</span></div>`;
+  if (isDone) miniHtml = `<div class="q-done-label">All experience fields complete</div>`;
+
+  trigger.innerHTML = `
+    <div class="q-left">
+      ${indexHtml}
+      <div class="q-text-wrap">
+        <div class="q-text">${q.question}</div>
+        ${miniHtml}
+      </div>
+    </div>
+    <div class="q-right">
+      ${isAdded(q.id) ? '<span class="origin-badge origin-added">Added</span>' : '<span class="origin-badge origin-original">Original</span>'}
+      <span class="pill pill-${color}">${cat.label}</span>
+      <svg class="chevron${isOpen?' open':''}" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>`;
+  trigger.addEventListener('click', () => {
+    state.openQuestions[q.id] = !state.openQuestions[q.id];
+    render();
+  });
+  card.appendChild(trigger);
+
+  if (isOpen) {
+    const body = el('div','q-body');
+    if (q.trap) {
+      const tb = el('div','trap-box');
+      tb.innerHTML = `<span class="trap-icon">⚠</span><p>${q.trap}</p>`;
+      body.appendChild(tb);
+    }
+    const steps = el('div','steps');
+    q.steps.forEach((step, si) => {
+      const key = `${q.id}-${si}`;
+      const isChecked = state.checked[key];
+      const stepEl = el('div','step');
+
+      const sh = el('div','step-header');
+      if (step.isExp) {
+        const cb = el('button', `checkbox ${color}${isChecked?' checked':''}`);
+        cb.setAttribute('aria-label', isChecked ? 'Mark incomplete' : 'Mark complete');
+        cb.innerHTML = isChecked ? '<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '';
+        cb.addEventListener('click', () => {
+          state.checked[key] = !state.checked[key];
+          lsSet('sh-checked', state.checked);
+          render();
+        });
+        sh.appendChild(cb);
+      } else {
+        sh.appendChild(el('div','step-dot'));
+      }
+      const sm = el('div','step-meta');
+      sm.innerHTML = `<span class="step-label">${step.label}</span>${step.isExp ? `<span class="exp-badge exp-${color}">your experience</span>` : ''}`;
+      sh.appendChild(sm);
+      stepEl.appendChild(sh);
+
+      const guidance = el('div','step-guidance');
+      guidance.textContent = step.guidance;
+      stepEl.appendChild(guidance);
+
+      if (step.isExp) {
+        const ta = el('textarea','step-textarea');
+        ta.setAttribute('rows','3');
+        ta.setAttribute('placeholder', step.prompt || 'Add your experience here…');
+        ta.value = state.notes[key] || '';
+        ta.addEventListener('input', () => {
+          state.notes[key] = ta.value;
+          lsSet('sh-notes', state.notes);
+        });
+        stepEl.appendChild(ta);
+      }
+      steps.appendChild(stepEl);
+    });
+    body.appendChild(steps);
+    card.appendChild(body);
+
+    // Model answer section
+    if (q.model) {
+      const modelOpen = state.openModels[q.id];
+      const mt = el('button', `model-toggle${modelOpen ? ' open' : ''}`);
+      mt.innerHTML = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M7 5v2.5M7 9.5v.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Model answer <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="margin-left:auto"><path d="M3 5l3.5 3.5L10 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      mt.addEventListener('click', () => { state.openModels[q.id] = !state.openModels[q.id]; render(); });
+      card.appendChild(mt);
+
+      if (modelOpen) {
+        const mb = el('div','model-body');
+        mb.innerHTML = `<div class="model-label">Model answer — scaffold, not script</div><div class="model-text">${q.model.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\[INSERT[^\]]*\]/g, m => `<span style="color:var(--amber-text);font-style:italic;">${m}</span>`)}</div><div class="model-note">⚠ Use this as a structural reference only. Replace every [INSERT] with your specific experience. An answer that sounds like this but lacks your real cases will be detected immediately by an experienced panel.</div>`;
+        card.appendChild(mb);
+      }
+    }
+  }
+  return card;
+}
+
+function renderScoreCard(q){
+  const cat = CATEGORIES[q.category];
+  const color = cat.color;
+  const isOpen = state.openMatrix[q.id];
+  const runs = state.marks[q.id] || [];
+  const latest = runs.length ? runs[runs.length-1] : null;
+  const max = MATRICES[q.id].crit.length * 3;
+  const num = QUESTIONS.indexOf(q) + 1;
+
+  const card = el('div', `q-card${isOpen?' open':''}`);
+  const trigger = el('button','q-trigger');
+  let badge = '';
+  if (latest){
+    const b = mxBand(latest.total, max, latest.red);
+    badge = `<span class="score-badge" style="background:${b.bg};color:${b.tc}">${latest.red?'\u26a0 ':''}${latest.total}/${max}</span>`;
+  }
+  trigger.innerHTML = `
+    <div class="q-left">
+      <div class="q-index">${String(num).padStart(2,'0')}</div>
+      <div class="q-text-wrap">
+        <div class="q-text">${q.question}</div>
+        ${runs.length ? `<div class="q-mini-label" style="margin-top:5px">${runs.length} run${runs.length>1?'s':''} saved</div>` : ''}
+      </div>
+    </div>
+    <div class="q-right">
+      ${badge}
+      ${isAdded(q.id) ? '<span class="origin-badge origin-added">Added</span>' : '<span class="origin-badge origin-original">Original</span>'}
+      <span class="pill pill-${color}">${cat.label}</span>
+      <svg class="chevron${isOpen?' open':''}" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>`;
+  trigger.addEventListener('click', () => { state.openMatrix[q.id] = !state.openMatrix[q.id]; render(); });
+  card.appendChild(trigger);
+  if (isOpen) card.appendChild(renderMatrixPanel(q, color));
+  return card;
+}
+
+function renderScoringView(){
+  const wrap = el('div');
+
+  const hint = el('div','hint');
+  hint.innerHTML = '<strong style="color:var(--text-secondary);font-weight:600">Examiner view.</strong> Pick the question being asked, expand it, score the four criteria 0\u20133, flag any red flag, then <strong style="color:var(--text-secondary);font-weight:500">Save this run</strong>. Each save is dated, so scores can be compared across mock interviews. Score against the criteria \u2014 not the model answer.';
+  wrap.appendChild(hint);
+
+  // session summary
+  const totalQ = QUESTIONS.length;
+  let scored=0, sum=0, flags=0;
+  QUESTIONS.forEach(q => {
+    const r = state.marks[q.id];
+    if (r && r.length){ scored++; const l=r[r.length-1]; sum+=l.total; if(l.red) flags++; }
+  });
+  const avg = scored ? (sum/scored).toFixed(1) : '\u2014';
+  const summary = el('div','score-summary');
+  summary.innerHTML =
+    `<div class="ss-item"><div class="ss-num">${scored}<span>/${totalQ}</span></div><div class="ss-lbl">questions scored</div></div>`+
+    `<div class="ss-item"><div class="ss-num">${avg}<span>/12</span></div><div class="ss-lbl">avg latest run</div></div>`+
+    `<div class="ss-item"><div class="ss-num" style="color:${flags?'var(--rose-text)':'var(--text-primary)'}">${flags}</div><div class="ss-lbl">red flags (latest)</div></div>`;
+  wrap.appendChild(summary);
+
+  wrap.appendChild(renderOriginToggle());
+
+  // category filter (independent of the Questions tab)
+  const allCats = ['ALL', ...Object.keys(CATEGORIES)];
+  const fb = el('div','filter-bar');
+  const fs = el('div','filter-scroll');
+  allCats.forEach(cat => {
+    const label = cat === 'ALL' ? 'All questions' : CATEGORIES[cat].label;
+    const count = cat === 'ALL' ? QUESTIONS.length : QUESTIONS.filter(q=>q.category===cat).length;
+    const btn = el('button', `filter-btn${state.scoreCategory===cat?' active':''}`);
+    btn.innerHTML = `${label} <span class="filter-count">${count}</span>`;
+    btn.addEventListener('click', () => { state.scoreCategory = cat; render(); });
+    fs.appendChild(btn);
+  });
+  fb.appendChild(fs);
+  wrap.appendChild(fb);
+
+  let filtered = state.scoreCategory === 'ALL' ? QUESTIONS : QUESTIONS.filter(q=>q.category===state.scoreCategory);
+  if (state.originFilter === 'original') filtered = filtered.filter(q=>!isAdded(q.id));
+  else if (state.originFilter === 'added') filtered = filtered.filter(q=>isAdded(q.id));
+  filtered.forEach(q => wrap.appendChild(renderScoreCard(q)));
+  return wrap;
+}
+
+function renderTimetableView() {
+  const wrap = el('div');
+
+  // interview banner
+  wrap.innerHTML = `
+    <div class="interview-banner">
+      <div class="banner-date"><div class="banner-day">2</div><div class="banner-month">July</div></div>
+      <div><div class="banner-label">Interview day</div><div class="banner-title">University of Sydney · Sydney Dental School</div><div class="banner-sub">GradDip Clinical Dentistry (Surgical Dentistry)</div></div>
+    </div>
+    <div class="non-neg">
+      <div class="non-neg-title">Non-negotiable daily habits</div>
+      ${NON_NEG.map(r=>`<div class="non-neg-row"><span class="non-neg-bullet">—</span><span>${r}</span></div>`).join('')}
+    </div>`;
+
+  const phases = el('div','phases');
+  PHASES.forEach(phase => {
+    const isOpen = state.openPhases[phase.id];
+    const totalTasks = phase.days.reduce((a,d)=>a+d.tasks.length,0);
+    const doneTasks = phase.days.reduce((a,d)=>a+d.tasks.filter((_,ti)=>state.daysDone[`${d.n}-${ti}`]).length,0);
+
+    const pb = el('div',`phase-block${isOpen?' open':''}`);
+    const ph = el('button','phase-header');
+    ph.innerHTML = `
+      <div class="phase-left">
+        <span class="pill pill-${phase.color}">${phase.label}</span>
+        <div><div class="phase-title">${phase.title}</div><div class="phase-sub">${phase.subtitle}</div></div>
+      </div>
+      <div class="phase-right">
+        <span class="phase-count">${doneTasks}/${totalTasks}</span>
+        <svg class="chevron${isOpen?' open':''}" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>`;
+    ph.addEventListener('click', () => { state.openPhases[phase.id] = !state.openPhases[phase.id]; render(); });
+    pb.appendChild(ph);
+
+    if (isOpen) {
+      const body = el('div','phase-body');
+      const grid = el('div','day-grid');
+      phase.days.forEach(day => {
+        const dc = el('div', `day-card${day.isInterview?' interview':''}${day.highlight?' highlight':''}`);
+        dc.innerHTML = `<div class="day-label">${day.label}</div><div class="day-date">${day.date}</div>`;
+        const tl = el('ul','task-list');
+        day.tasks.forEach((task, ti) => {
+          const key = `${day.n}-${ti}`;
+          const done = state.daysDone[key];
+          const li = el('li', `task-item${done?' done':''}`);
+          li.innerHTML = `<span class="task-check">${done?'✓':'·'}</span><span>${task}</span>`;
+          li.addEventListener('click', () => {
+            state.daysDone[key] = !state.daysDone[key];
+            lsSet('sh-days', state.daysDone);
+            render();
+          });
+          tl.appendChild(li);
+        });
+        dc.appendChild(tl);
+        grid.appendChild(dc);
+      });
+      body.appendChild(grid);
+      pb.appendChild(body);
+    }
+    phases.appendChild(pb);
+  });
+  wrap.appendChild(phases);
+
+  // daily structure
+  const ds = el('div','daily-section');
+  ds.innerHTML = `<div class="daily-title">Daily session structure · 90 min max</div>` +
+    DAILY.map(b=>`<div class="daily-row"><div class="daily-time">${b.time}</div><div><div class="daily-block-title">${b.title}</div><div class="daily-desc">${b.desc}</div></div></div>`).join('');
+  wrap.appendChild(ds);
+  return wrap;
+}
+
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  app.appendChild(renderHeader());
+  const main = el('div','main');
+  const container = el('div','container');
+  let viewEl;
+  if (state.view === 'questions') viewEl = renderQuestionsView();
+  else if (state.view === 'timetable') viewEl = renderTimetableView();
+  else viewEl = renderScoringView();
+  container.appendChild(viewEl);
+  main.appendChild(container);
+  app.appendChild(main);
+}
+
+render();
+</script>
+</body>
+</html>
